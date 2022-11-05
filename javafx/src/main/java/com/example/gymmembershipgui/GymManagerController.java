@@ -8,7 +8,7 @@ import javafx.event.ActionEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class HelloController implements Initializable {
+public class GymManagerController implements Initializable {
 
     private MemberDatabase database;
 
@@ -80,8 +80,7 @@ public class HelloController implements Initializable {
     // not already in the database
     // and then just add.
 
-    public HelloController()
-    {
+    public GymManagerController() {
         database = new MemberDatabase();
         schedule = new ClassSchedule();
     }
@@ -173,9 +172,9 @@ public class HelloController implements Initializable {
             errorAlert.setContentText("DOB cannot be today or future day");
             errorAlert.showAndWait();
             clearAllFields();
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     //only need name and dob to remove
@@ -186,21 +185,11 @@ public class HelloController implements Initializable {
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
         errorAlert.setHeaderText("Input not valid");
 
+        if(!checkCreds()){
+            return;
+        }
         String firstname = enterFirstName.getText();
         String lastname = enterLastName.getText();
-        if(firstname == null || lastname == null){
-            errorAlert.setContentText("Enter a full name.");
-            errorAlert.showAndWait();
-            clearAllFields();
-            return;
-        }
-        if(myDatePicker.getValue() == null)
-        {
-            errorAlert.setContentText("Enter a date.");
-            errorAlert.showAndWait();
-            clearAllFields();
-            return;
-        }
 
         Date DOB = new Date(myDatePicker.getValue().toString());
 
@@ -220,6 +209,18 @@ public class HelloController implements Initializable {
 
     @FXML
     public void checkInMember(ActionEvent event)
+    {
+
+    }
+
+    @FXML
+    public void checkOutGuest(ActionEvent event)
+    {
+
+    }
+
+    @FXML
+    public void checkOutMember(ActionEvent event)
     {
 
     }
