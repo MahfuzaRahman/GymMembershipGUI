@@ -51,10 +51,21 @@ public class Date implements Comparable<Date> {
      * @param date the date as a String in mm/dd/yyyy format.
      */
     public Date(String date) {
-        String[] dateArray = date.split("/", 0);
-        month = Integer.parseInt(dateArray[0]);
-        day = Integer.parseInt(dateArray[1]);
-        year = Integer.parseInt(dateArray[2]);
+        String[] dateArray;
+        if(date.contains("/"))
+        {
+            dateArray = date.split("/", 0);
+            month = Integer.parseInt(dateArray[0]);
+            day = Integer.parseInt(dateArray[1]);
+            year = Integer.parseInt(dateArray[2]);
+        }
+        else
+        {
+            dateArray = date.split("-", 0);
+            month = Integer.parseInt(dateArray[1]);
+            day = Integer.parseInt(dateArray[2]);
+            year = Integer.parseInt(dateArray[0]);
+        }
     }
 
     /**
