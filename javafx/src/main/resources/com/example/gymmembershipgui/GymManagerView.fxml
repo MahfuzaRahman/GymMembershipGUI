@@ -70,7 +70,7 @@
                                  <RadioButton fx:id="premium" mnemonicParsing="false" text="Premium" toggleGroup="$membershipbutton" />
                               </children>
                            </HBox>
-                           <DatePicker fx:id="myDatePicker" prefHeight="26.0" prefWidth="195.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                           <DatePicker fx:id="myDatePicker" editable="false" prefHeight="26.0" prefWidth="195.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                            <ChoiceBox fx:id="myChoiceBar" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         </children>
                      </GridPane>
@@ -115,7 +115,7 @@
                                     </children>
                                  </HBox>
                                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                 <DatePicker fx:id="memberDOB" prefHeight="26.0" prefWidth="195.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                 <DatePicker fx:id="memberDOB" disable="true" prefHeight="26.0" prefWidth="195.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
                                     <children>
                                        <BorderPane prefHeight="200.0" prefWidth="200.0">
