@@ -98,30 +98,9 @@ public class HelloController implements Initializable {
 
         String firstname = enterFirstName.getText();
         String lastname = enterLastName.getText();
-        if(firstname.equals("") || lastname.equals("")){
-            errorAlert.setContentText("Enter a full name.");
-            errorAlert.showAndWait();
-            clearAllFields();
-            return;
-        }
-        if(!isAlpha(firstname) || !isAlpha(lastname)){
-            errorAlert.setContentText("Names should not include special characters");
-            errorAlert.showAndWait();
-            clearAllFields();
-            return;
-        }
-        if(myDatePicker.getValue() == null)
-        {
-            errorAlert.setContentText("Enter a date.");
-            errorAlert.showAndWait();
-            clearAllFields();
-            return;
-        }
         Date DOB = new Date(myDatePicker.getValue().toString());
-        if(DOB.compareTo(new Date()) >=0){
-            errorAlert.setContentText("DOB cannot be today or future day");
-            errorAlert.showAndWait();
-            clearAllFields();
+
+        if(!checkCreds()){
             return;
         }
         if(!DOB.aboveEighteen()){
@@ -161,6 +140,42 @@ public class HelloController implements Initializable {
             memberTextOutput.appendText("\n" + firstname + " " + lastname + " " + DOB.toString() + "added.");
         }
         clearAllFields();
+    }
+
+    private boolean checkCreds()
+    {
+        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+        errorAlert.setHeaderText("Input not valid");
+
+        String firstname = enterFirstName.getText();
+        String lastname = enterLastName.getText();
+        if(firstname.equals("") || lastname.equals("")){
+            errorAlert.setContentText("Enter a full name.");
+            errorAlert.showAndWait();
+            clearAllFields();
+            return false;
+        }
+        if(!isAlpha(firstname) || !isAlpha(lastname)){
+            errorAlert.setContentText("Names should not include special characters");
+            errorAlert.showAndWait();
+            clearAllFields();
+            return false;
+        }
+        if(myDatePicker.getValue() == null)
+        {
+            errorAlert.setContentText("Enter a date.");
+            errorAlert.showAndWait();
+            clearAllFields();
+            return false;
+        }
+        Date DOB = new Date(myDatePicker.getValue().toString());
+        if(DOB.compareTo(new Date()) >=0){
+            errorAlert.setContentText("DOB cannot be today or future day");
+            errorAlert.showAndWait();
+            clearAllFields();
+            return true;
+        }
+        return false;
     }
 
     //only need name and dob to remove

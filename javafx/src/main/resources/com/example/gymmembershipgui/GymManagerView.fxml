@@ -98,7 +98,7 @@
                                  <Label prefHeight="17.0" prefWidth="169.0" text="Member First Name" />
                                  <Label text="Member Last Name" GridPane.rowIndex="1" />
                                  <Label text="Date of Birth" GridPane.rowIndex="2" />
-                                 <TextField GridPane.columnIndex="1" />
+                                 <TextField fx:id="memberFirstName" GridPane.columnIndex="1" />
                                  <TextField fx:id="memberLastName" layoutX="193.0" layoutY="12.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                     <children>
