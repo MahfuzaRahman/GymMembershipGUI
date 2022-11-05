@@ -85,17 +85,11 @@ public class GymManagerController implements Initializable {
         schedule = new ClassSchedule();
     }
 
-    private void checkNameAndDate()
-    {
-        // can copy n paste repeated code here
-    }
-
     @FXML
     public void addMember(ActionEvent event) {
 
         String firstname = enterFirstName.getText();
         String lastname = enterLastName.getText();
-//        Date DOB = new Date(myDatePicker.getValue().toString());
 
         if(!checkCreds()){
             return;
@@ -142,9 +136,13 @@ public class GymManagerController implements Initializable {
 
     private boolean checkCreds()
     {
-
         String firstname = enterFirstName.getText();
         String lastname = enterLastName.getText();
+
+        if(checkEmptyMember()){
+            memberTextOutput.appendText("Enter member information.\n");
+            return false;
+        }
         if(firstname.equals("") || lastname.equals("")){
             memberTextOutput.appendText("\nEnter a full name.");
             clearAllFields();
@@ -168,6 +166,15 @@ public class GymManagerController implements Initializable {
             return false;
         }
         return true;
+    }
+
+    private boolean checkEmptyMember(){
+        String firstName = enterFirstName.getText();
+        String lastName = enterLastName.getText();
+        if(firstName.equals("") && lastName.equals("") &&
+                myDatePicker.getValue() == null && myChoiceBar.getValue() == null)
+            return true;
+        return false;
     }
 
     //only need name and dob to remove
@@ -195,7 +202,7 @@ public class GymManagerController implements Initializable {
     {
         String firstname = memberFirstName.getText();
         String lastname = memberLastName.getText();
-        if(memberFirstName.equals("") || memberLastName.equals("")){
+        if(firstname.equals("") || lastname.equals("")){
             memberTextOutput.appendText("\nEnter a full name.");
             clearAllFields();
             return false;
@@ -238,6 +245,34 @@ public class GymManagerController implements Initializable {
     @FXML
     public void checkInGuest(ActionEvent event)
     {
+        if(!checkCredsGuest()) {
+            return;
+        }
+        String fname = memberFirstName.getText();
+        String lname = memberLastName.getText();
+        String dob = memberDOB.getValue().toString();
+
+        Member checkMember = new Member(fname, lname, dob);
+        Member findMember = database.findMember(checkMember);
+        if(!isClassValid(fitnessChoiceBar.getValue(), instructorChoiceBar.getValue(), locationChoiceBar.getValue())) {
+            memberTextOutput.appendText("\nClass does not exist.");
+            return;
+        }
+        if(!isMemberValid(findMember, checkMember))
+            return;
+        if(!findMember.getLocation().name().equalsIgnoreCase(locationChoiceBar.getValue()) &&
+                !(findMember instanceof Family)) {
+            Location tryCheckIn = Location.getLocation(locationChoiceBar.getValue());
+
+            memberTextOutput.appendText(findMember.getFirstName() + " " +
+                    findMember.getLastName() + " checking in " +
+                    tryCheckIn.name() + ", " + tryCheckIn.getZipCode() + ", "
+                    + tryCheckIn.getCounty() + " - standard membership " +
+                    "location restriction.");
+            return;
+        }
+        schedule.checkInMember
+                (fitnessChoiceBar.getValue(), locationChoiceBar.getValue(), instructorChoiceBar.getValue(), findMember);
 
     }
 
@@ -277,6 +312,30 @@ public class GymManagerController implements Initializable {
             if(!Character.isLetter(c)) {
                 return false;
             }
+        }
+        return true;
+    }
+
+    private boolean isClassValid(String fitnessClass, String instructor,
+                                 String location){
+        if(!schedule.findFitnessClass(fitnessClass)) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isMemberValid(Member findMember, Member checkMember){
+        if(findMember == null) {
+            memberTextOutput.appendText(checkMember.getFirstName() + " " +
+                            checkMember.getLastName() + " " + checkMember.getDOB() +
+                                        " is not in the database.");
+            return false;
+        }
+        if(findMember.membershipExpired()) {
+            memberTextOutput.appendText(findMember.getFirstName() + " " +
+                    findMember.getLastName() + " " + findMember.getDOB() +
+                    " membership expired.");
+            return false;
         }
         return true;
     }

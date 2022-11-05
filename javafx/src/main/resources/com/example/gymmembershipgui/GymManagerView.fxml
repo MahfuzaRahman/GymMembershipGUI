@@ -115,7 +115,7 @@
                                     </children>
                                  </HBox>
                                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                 <DatePicker fx:id="memberDOB" disable="true" prefHeight="26.0" prefWidth="195.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                 <DatePicker fx:id="memberDOB" editable="false" prefHeight="26.0" prefWidth="195.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
                                     <children>
                                        <BorderPane prefHeight="200.0" prefWidth="200.0">
@@ -151,7 +151,7 @@
                                  <Label text="Guest?" GridPane.rowIndex="5" />
                                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                                     <children>
-                                       <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="111.0" text="Check-in" />
+                                       <Button mnemonicParsing="false" onAction="#checkInGuest" prefHeight="26.0" prefWidth="111.0" text="Check-in" />
                                        <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="114.0" text="Check-out" />
                                     </children>
                                  </HBox>
