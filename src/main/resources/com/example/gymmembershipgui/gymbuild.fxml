@@ -50,12 +50,12 @@
                            <Label text="Last Name" GridPane.rowIndex="1" />
                            <Label text="Date of Birth" GridPane.rowIndex="2" />
                            <Label text="Location" GridPane.rowIndex="3" />
-                           <TextField GridPane.columnIndex="1" />
-                           <TextField layoutX="193.0" layoutY="12.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                           <TextField fx:id="enterFirstName" onInputMethodTextChanged="#onFirstNameEntered" GridPane.columnIndex="1" />
+                           <TextField fx:id="enterLastName" layoutX="193.0" layoutY="12.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                            <Label layoutX="10.0" layoutY="144.0" text="Membership Type" GridPane.rowIndex="4" />
                            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                               <children>
-                                 <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="83.0" text="Add" />
+                                 <Button fx:id="addMember" mnemonicParsing="false" onAction="#submit" prefHeight="26.0" prefWidth="83.0" text="Add" />
                                  <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="75.0" text="Remove" />
                               </children>
                            </HBox>
@@ -225,7 +225,7 @@
    </BorderPane>
    <BorderPane prefHeight="200.0" prefWidth="200.0">
       <center>
-         <TextArea prefHeight="106.0" prefWidth="387.0" BorderPane.alignment="CENTER" />
+         <TextArea fx:id="memberTextOutput" prefHeight="106.0" prefWidth="387.0" BorderPane.alignment="CENTER" />
       </center>
    </BorderPane>
 </VBox>

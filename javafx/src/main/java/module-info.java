@@ -1,10 +1,10 @@
-module com.example.javafx {
+module com.example.gymmembershipgui {
     requires javafx.controls;
     requires javafx.fxml;
-            
-        requires org.controlsfx.controls;
-                        requires org.kordamp.bootstrapfx.core;
-            
-    opens com.example.javafx to javafx.fxml;
-    exports com.example.javafx;
+
+    requires org.controlsfx.controls;
+    requires org.kordamp.bootstrapfx.core;
+
+    opens com.example.gymmembershipgui to javafx.fxml;
+    exports com.example.gymmembershipgui;
 }

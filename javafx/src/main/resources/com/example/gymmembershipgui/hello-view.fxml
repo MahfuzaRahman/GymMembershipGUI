@@ -84,11 +84,11 @@
                      </GridPane>
                   </content>
                </Tab>
-             <Tab text="Fitness Class">
+             <Tab text="Fitness Class Check-In">
                <content>
                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                         <children>
-                           <GridPane prefHeight="235.0" prefWidth="387.0">
+                           <GridPane prefHeight="203.0" prefWidth="387.0">
                               <columnConstraints>
                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="183.0" minWidth="10.0" prefWidth="109.0" />
                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="270.0" minWidth="10.0" prefWidth="269.0" />
@@ -96,10 +96,9 @@
                               <rowConstraints>
                                  <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
                                  <RowConstraints maxHeight="53.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
-                                 <RowConstraints maxHeight="68.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
-                                 <RowConstraints maxHeight="68.0" minHeight="10.0" prefHeight="64.0" vgrow="SOMETIMES" />
-                                 <RowConstraints maxHeight="68.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
                                  <RowConstraints maxHeight="68.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
+                                 <RowConstraints maxHeight="68.0" minHeight="10.0" prefHeight="66.0" vgrow="SOMETIMES" />
+                                 <RowConstraints maxHeight="68.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
                                  <RowConstraints maxHeight="68.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
                               </rowConstraints>
                               <children>
@@ -178,13 +177,7 @@
                                        </BorderPane>
                                     </children>
                                  </HBox>
-                                 <Label text="Guest?" GridPane.rowIndex="5" />
-                                 <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
-                                    <children>
-                                       <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="111.0" text="Check-in" />
-                                       <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="114.0" text="Check-out" />
-                                    </children>
-                                 </HBox>
+                                 <Label text="Guest Check-in:" GridPane.rowIndex="5" />
                               </children>
                            </GridPane>
                         </children>
