@@ -92,25 +92,24 @@ public class GymManagerController implements Initializable {
 
     @FXML
     public void addMember(ActionEvent event) {
-        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-        errorAlert.setHeaderText("Input not valid");
 
         String firstname = enterFirstName.getText();
         String lastname = enterLastName.getText();
-        Date DOB = new Date(myDatePicker.getValue().toString());
+//        Date DOB = new Date(myDatePicker.getValue().toString());
 
         if(!checkCreds()){
             return;
         }
+
+        Date DOB = new Date(myDatePicker.getValue().toString());
         if(!DOB.aboveEighteen()){
-            errorAlert.setContentText("Member must be older than 18.");
-            errorAlert.showAndWait();
+            memberTextOutput.appendText("\nMember must be older than 18.");
             clearAllFields();
             return;
         }
         String location;
         if(myChoiceBar.getValue() == null || myChoiceBar.getValue().equals("")){
-            errorAlert.setContentText("Select a location.");
+            memberTextOutput.appendText("\nSelect a location.");
             clearAllFields();
             return;
         }
@@ -143,34 +142,28 @@ public class GymManagerController implements Initializable {
 
     private boolean checkCreds()
     {
-        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-        errorAlert.setHeaderText("Input not valid");
 
         String firstname = enterFirstName.getText();
         String lastname = enterLastName.getText();
         if(firstname.equals("") || lastname.equals("")){
-            errorAlert.setContentText("Enter a full name.");
-            errorAlert.showAndWait();
+            memberTextOutput.appendText("\nEnter a full name.");
             clearAllFields();
             return false;
         }
         if(!isAlpha(firstname) || !isAlpha(lastname)){
-            errorAlert.setContentText("Names should not include special characters");
-            errorAlert.showAndWait();
+            memberTextOutput.appendText("\nNames should not include special characters");
             clearAllFields();
             return false;
         }
         if(myDatePicker.getValue() == null)
         {
-            errorAlert.setContentText("Enter a date.");
-            errorAlert.showAndWait();
+            memberTextOutput.appendText("\nEnter a valid date.");
             clearAllFields();
             return false;
         }
         Date DOB = new Date(myDatePicker.getValue().toString());
         if(DOB.compareTo(new Date()) >=0){
-            errorAlert.setContentText("DOB cannot be today or future day");
-            errorAlert.showAndWait();
+            memberTextOutput.appendText("\nDOB cannot be today or future day");
             clearAllFields();
             return false;
         }
@@ -182,9 +175,6 @@ public class GymManagerController implements Initializable {
     @FXML
     public void removeMember(ActionEvent event)
     {
-        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-        errorAlert.setHeaderText("Input not valid");
-
         if(!checkCreds()){
             return;
         }
@@ -199,6 +189,50 @@ public class GymManagerController implements Initializable {
         }
         memberTextOutput.appendText("\nMember is removed.");
         clearAllFields();
+    }
+
+    private boolean checkCredsGuest()
+    {
+        String firstname = memberFirstName.getText();
+        String lastname = memberLastName.getText();
+        if(memberFirstName.equals("") || memberLastName.equals("")){
+            memberTextOutput.appendText("\nEnter a full name.");
+            clearAllFields();
+            return false;
+        }
+        if(!isAlpha(firstname) || !isAlpha(lastname)){
+            memberTextOutput.appendText("\nNames should not include special characters");
+            clearAllFields();
+            return false;
+        }
+        if(memberDOB.getValue() == null)
+        {
+            memberTextOutput.appendText("\nEnter a valid date.");
+            clearAllFields();
+            return false;
+        }
+        Date DOB = new Date(memberDOB.getValue().toString());
+        if(DOB.compareTo(new Date()) >=0){
+            memberTextOutput.appendText("\nDOB cannot be today or future day");
+            clearAllFields();
+            return false;
+        }
+        if(locationChoiceBar.getValue() == null || locationChoiceBar.getValue().equals("")){
+            memberTextOutput.appendText("\nSelect a location.");
+            clearAllFields();
+            return false;
+        }
+        if(fitnessChoiceBar.getValue() == null || fitnessChoiceBar.getValue().equals("")){
+            memberTextOutput.appendText("\nSelect a fitness class.");
+            clearAllFields();
+            return false;
+        }
+        if(instructorChoiceBar.getValue() == null || instructorChoiceBar.getValue().equals("")){
+            memberTextOutput.appendText("\nSelect an instructor.");
+            clearAllFields();
+            return false;
+        }
+        return true;
     }
 
     @FXML
@@ -224,15 +258,6 @@ public class GymManagerController implements Initializable {
     {
 
     }
-
-    private void checkCredentials()
-    {
-        // names are entered
-        // dob is entered
-        // location, instructor, and fitnessclass are selected
-        //
-    }
-
 
     //c;ears all fields in membership tab besides text area ofc.
     private void clearAllFields()
