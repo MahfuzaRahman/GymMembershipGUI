@@ -140,6 +140,16 @@ public class Date implements Comparable<Date> {
         return null;
     }
 
+    public boolean aboveEighteen(){
+        Date todayDate = new Date();
+        Date eighteenthBirthday = new Date(getMonth() +
+                "/" + getDay() + "/" +
+                (getYear() + 18));
+        if (eighteenthBirthday.compareTo(todayDate) == 1)
+            return false;
+        return true;
+    }
+
     /**
      * Given month number of a month (1-12), finds matching Months constant.
      * @param monthNumber the number value of a month.

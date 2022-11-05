@@ -23,7 +23,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" prefHeight="425.0" prefWidth="427.0" spacing="20.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gymmembershipgui.HelloController">
+<VBox alignment="CENTER" prefHeight="425.0" prefWidth="427.0" spacing="20.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gymmembershipgui.HelloController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -56,19 +56,19 @@
                            <Label layoutX="10.0" layoutY="144.0" text="Membership Type" GridPane.rowIndex="4" />
                            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                               <children>
-                                 <Button fx:id="addMember" mnemonicParsing="false" onAction="#submit" prefHeight="26.0" prefWidth="83.0" text="Add" />
-                                 <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="75.0" text="Remove" />
+                                 <Button fx:id="addMember" mnemonicParsing="false" onAction="#addMember" prefHeight="26.0" prefWidth="83.0" text="Add" />
+                                 <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#removeMember" prefHeight="26.0" prefWidth="75.0" text="Remove" />
                               </children>
                            </HBox>
                            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                               <children>
-                                 <RadioButton mnemonicParsing="false" prefHeight="18.0" prefWidth="91.0" selected="true" text="Standard">
+                                 <RadioButton fx:id="standard" mnemonicParsing="false" prefHeight="18.0" prefWidth="91.0" selected="true" text="Standard">
                                     <toggleGroup>
                                        <ToggleGroup fx:id="membershipbutton" />
                                     </toggleGroup>
                                  </RadioButton>
-                                 <RadioButton mnemonicParsing="false" prefHeight="18.0" prefWidth="71.0" text="Family" toggleGroup="$membershipbutton" />
-                                 <RadioButton mnemonicParsing="false" text="Premium" toggleGroup="$membershipbutton" />
+                                 <RadioButton fx:id="family" mnemonicParsing="false" prefHeight="18.0" prefWidth="71.0" text="Family" toggleGroup="$membershipbutton" />
+                                 <RadioButton fx:id="premium" mnemonicParsing="false" text="Premium" toggleGroup="$membershipbutton" />
                               </children>
                            </HBox>
                            <DatePicker fx:id="myDatePicker" prefHeight="26.0" prefWidth="195.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
