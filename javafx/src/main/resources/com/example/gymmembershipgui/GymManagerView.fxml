@@ -7,7 +7,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Tab?>
@@ -100,23 +99,23 @@
                                  <Label text="Member Last Name" GridPane.rowIndex="1" />
                                  <Label text="Date of Birth" GridPane.rowIndex="2" />
                                  <TextField GridPane.columnIndex="1" />
-                                 <TextField layoutX="193.0" layoutY="12.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                 <TextField fx:id="memberLastName" layoutX="193.0" layoutY="12.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                     <children>
                                        <HBox prefHeight="100.0" prefWidth="200.0">
                                           <children>
-                                             <RadioButton mnemonicParsing="false" prefHeight="18.0" prefWidth="97.0" text="Yes">
+                                             <RadioButton fx:id="isGuestYes" mnemonicParsing="false" prefHeight="18.0" prefWidth="97.0" text="Yes">
                                                 <toggleGroup>
                                                    <ToggleGroup fx:id="guestcheckin" />
                                                 </toggleGroup>
                                              </RadioButton>
-                                             <RadioButton mnemonicParsing="false" selected="true" text="No" toggleGroup="$guestcheckin" />
+                                             <RadioButton fx:id="isGuestNo" mnemonicParsing="false" selected="true" text="No" toggleGroup="$guestcheckin" />
                                           </children>
                                        </HBox>
                                     </children>
                                  </HBox>
                                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                 <DatePicker prefHeight="26.0" prefWidth="195.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                 <DatePicker fx:id="memberDOB" prefHeight="26.0" prefWidth="195.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
                                     <children>
                                        <BorderPane prefHeight="200.0" prefWidth="200.0">
@@ -124,15 +123,7 @@
                                              <Label text="Location" BorderPane.alignment="CENTER" />
                                           </top>
                                           <center>
-                                             <MenuButton mnemonicParsing="false" text="Select Location" BorderPane.alignment="CENTER">
-                                                <items>
-                                                   <MenuItem mnemonicParsing="false" text="Bridgewater" />
-                                                   <MenuItem mnemonicParsing="false" text="Edison" />
-                                                   <MenuItem mnemonicParsing="false" text="Franklin" />
-                                                   <MenuItem mnemonicParsing="false" text="Piscataway" />
-                                                   <MenuItem mnemonicParsing="false" text="Somerville" />
-                                                </items>
-                                             </MenuButton>
+                                             <ChoiceBox fx:id="locationChoiceBar" prefHeight="26.0" prefWidth="96.0" BorderPane.alignment="CENTER" />
                                           </center>
                                        </BorderPane>
                                     </children>
@@ -144,13 +135,7 @@
                                              <Label text="Fitness Class" BorderPane.alignment="CENTER" />
                                           </top>
                                           <center>
-                                             <MenuButton mnemonicParsing="false" text="Select Class" BorderPane.alignment="CENTER">
-                                                <items>
-                                                   <MenuItem mnemonicParsing="false" text="Cardio" />
-                                                   <MenuItem mnemonicParsing="false" text="Pilates" />
-                                                   <MenuItem mnemonicParsing="false" text="Spinning" />
-                                                </items>
-                                             </MenuButton>
+                                             <ChoiceBox fx:id="fitnessChoiceBar" prefHeight="26.0" prefWidth="105.0" BorderPane.alignment="CENTER" />
                                           </center>
                                        </BorderPane>
                                        <BorderPane prefHeight="66.0" prefWidth="130.0">
@@ -158,15 +143,7 @@
                                              <Label text="Instructor" BorderPane.alignment="CENTER" />
                                           </top>
                                           <center>
-                                             <MenuButton mnemonicParsing="false" text="Select Instructor" BorderPane.alignment="CENTER">
-                                                <items>
-                                                   <MenuItem mnemonicParsing="false" text="Jennifer" />
-                                                   <MenuItem mnemonicParsing="false" text="Kim" />
-                                                   <MenuItem mnemonicParsing="false" text="Denise" />
-                                                   <MenuItem mnemonicParsing="false" text="Davis" />
-                                                   <MenuItem mnemonicParsing="false" text="Emma" />
-                                                </items>
-                                             </MenuButton>
+                                             <ChoiceBox fx:id="instructorChoiceBar" prefHeight="26.0" prefWidth="98.0" BorderPane.alignment="CENTER" />
                                           </center>
                                        </BorderPane>
                                     </children>

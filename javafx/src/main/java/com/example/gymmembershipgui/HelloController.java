@@ -34,6 +34,10 @@ public class HelloController implements Initializable {
 
     private String[] locations = {"Bridgewater", "Edison", "Franklin", "Piscataway", "Somerville"};
 
+    private String[] fitnessClasses = {"Cardio", "Pilates", "Spinning"};
+
+    private String[] instructors = {"Jeniffer", "Kim", "Dennis", "Denise", "Emma"};
+
     @FXML
     private RadioButton standard;
 
@@ -42,6 +46,33 @@ public class HelloController implements Initializable {
 
     @FXML
     private RadioButton premium;
+
+    // fitness class variables
+    @FXML
+    private TextField memberFirstName;
+
+    @FXML
+    private TextField memberLastName;
+
+    @FXML
+    private DatePicker memberDOB;
+
+    @FXML
+    private ChoiceBox<String> locationChoiceBar;
+
+    @FXML
+    private ChoiceBox<String> fitnessChoiceBar;
+
+    @FXML
+    private ChoiceBox<String> instructorChoiceBar;
+
+    @FXML
+    private RadioButton isGuestYes;
+
+    @FXML
+    private RadioButton isGuestNo;
+
+
 
     // firstName and lastname should have no extra characters
     // DOB should be 18, should not be today or future day
@@ -133,6 +164,7 @@ public class HelloController implements Initializable {
     }
 
     //only need name and dob to remove
+    // but what if user wants to add rando location and shi?? like do we disregard that input?
     @FXML
     public void removeMember(ActionEvent event)
     {
@@ -165,6 +197,26 @@ public class HelloController implements Initializable {
         clearAllFields();
     }
 
+    @FXML
+    public void checkInGuest(ActionEvent event)
+    {
+
+    }
+
+    @FXML
+    public void checkInMember(ActionEvent event)
+    {
+
+    }
+
+    private void checkCredentials()
+    {
+        // names are entered
+        // dob is entered
+        // location, instructor, and fitnessclass are selected
+        //
+    }
+
 
     //c;ears all fields in membership tab besides text area ofc.
     private void clearAllFields()
@@ -191,5 +243,8 @@ public class HelloController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         myChoiceBar.getItems().addAll(locations);
+        locationChoiceBar.getItems().addAll(locations);
+        fitnessChoiceBar.getItems().addAll(fitnessClasses);
+        instructorChoiceBar.getItems().addAll(instructors);
     }
 }
