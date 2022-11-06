@@ -151,8 +151,8 @@
                                  <Label text="Guest?" GridPane.rowIndex="5" />
                                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                                     <children>
-                                       <Button mnemonicParsing="false" onAction="#checkInGuest" prefHeight="26.0" prefWidth="111.0" text="Check-in" />
-                                       <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="114.0" text="Check-out" />
+                                       <Button mnemonicParsing="false" onAction="#checkIn" prefHeight="26.0" prefWidth="111.0" text="Check-in" />
+                                       <Button mnemonicParsing="false" onAction="#checkOut" prefHeight="26.0" prefWidth="114.0" text="Check-out" />
                                     </children>
                                  </HBox>
                               </children>

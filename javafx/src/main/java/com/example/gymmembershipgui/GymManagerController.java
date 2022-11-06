@@ -94,13 +94,7 @@ public class GymManagerController implements Initializable {
         if(!checkCreds()){
             return;
         }
-
         Date DOB = new Date(myDatePicker.getValue().toString());
-        if(!DOB.aboveEighteen()){
-            memberTextOutput.appendText("\nMember must be older than 18.");
-            clearAllFields();
-            return;
-        }
         String location;
         if(myChoiceBar.getValue() == null || myChoiceBar.getValue().equals("")){
             memberTextOutput.appendText("\nSelect a location.");
@@ -165,6 +159,11 @@ public class GymManagerController implements Initializable {
             clearAllFields();
             return false;
         }
+        if(!DOB.aboveEighteen()){
+            memberTextOutput.appendText("\nMember must be older than 18.");
+            clearAllFields();
+            return false;
+        }
         return true;
     }
 
@@ -198,68 +197,95 @@ public class GymManagerController implements Initializable {
         clearAllFields();
     }
 
-    private boolean checkCredsGuest()
+    private boolean checkCredsFitness()
     {
         String firstname = memberFirstName.getText();
         String lastname = memberLastName.getText();
         if(firstname.equals("") || lastname.equals("")){
             memberTextOutput.appendText("\nEnter a full name.");
-            clearAllFields();
+            clearAllFieldsFitness();
             return false;
         }
         if(!isAlpha(firstname) || !isAlpha(lastname)){
             memberTextOutput.appendText("\nNames should not include special characters");
-            clearAllFields();
+            clearAllFieldsFitness();
             return false;
         }
         if(memberDOB.getValue() == null)
         {
             memberTextOutput.appendText("\nEnter a valid date.");
-            clearAllFields();
+            clearAllFieldsFitness();
             return false;
         }
         Date DOB = new Date(memberDOB.getValue().toString());
         if(DOB.compareTo(new Date()) >=0){
             memberTextOutput.appendText("\nDOB cannot be today or future day");
-            clearAllFields();
+            clearAllFieldsFitness();
+            return false;
+        }
+        if(!DOB.aboveEighteen()){
+            memberTextOutput.appendText("\nMember must be older than 18.");
+            clearAllFieldsFitness();
             return false;
         }
         if(locationChoiceBar.getValue() == null || locationChoiceBar.getValue().equals("")){
             memberTextOutput.appendText("\nSelect a location.");
-            clearAllFields();
+            clearAllFieldsFitness();
             return false;
         }
         if(fitnessChoiceBar.getValue() == null || fitnessChoiceBar.getValue().equals("")){
             memberTextOutput.appendText("\nSelect a fitness class.");
-            clearAllFields();
+            clearAllFieldsFitness();
             return false;
         }
         if(instructorChoiceBar.getValue() == null || instructorChoiceBar.getValue().equals("")){
             memberTextOutput.appendText("\nSelect an instructor.");
-            clearAllFields();
+            clearAllFieldsFitness();
             return false;
         }
         return true;
     }
 
     @FXML
-    public void checkInGuest(ActionEvent event)
+    public void checkIn(ActionEvent event){
+        if(isGuestYes.isSelected()){
+            checkInGuest(event);
+        }
+        else{
+            checkInMember(event);
+        }
+    }
+
+    @FXML
+    public void checkOut(ActionEvent event){
+        if(isGuestYes.isSelected()){
+            checkOutGuest(event);
+        }
+        else{
+            checkOutMember(event);
+        }
+    }
+
+    private void checkInGuest(ActionEvent event)
     {
-        if(!checkCredsGuest()) {
+        if(!checkCredsFitness()) {
             return;
         }
         String fname = memberFirstName.getText();
         String lname = memberLastName.getText();
-        String dob = memberDOB.getValue().toString();
+        Date DOB = new Date(memberDOB.getValue().toString());
 
-        Member checkMember = new Member(fname, lname, dob);
+        Member checkMember = new Member(fname, lname, DOB.toString());
         Member findMember = database.findMember(checkMember);
         if(!isClassValid(fitnessChoiceBar.getValue(), instructorChoiceBar.getValue(), locationChoiceBar.getValue())) {
             memberTextOutput.appendText("\nClass does not exist.");
+            clearAllFieldsFitness();
             return;
         }
-        if(!isMemberValid(findMember, checkMember))
+        if(!isMemberValid(findMember, checkMember)) {
+            clearAllFieldsFitness();
             return;
+        }
         if(!findMember.getLocation().name().equalsIgnoreCase(locationChoiceBar.getValue()) &&
                 !(findMember instanceof Family)) {
             Location tryCheckIn = Location.getLocation(locationChoiceBar.getValue());
@@ -269,29 +295,123 @@ public class GymManagerController implements Initializable {
                     tryCheckIn.name() + ", " + tryCheckIn.getZipCode() + ", "
                     + tryCheckIn.getCounty() + " - standard membership " +
                     "location restriction.");
+            clearAllFieldsFitness();
             return;
         }
-        schedule.checkInMember
-                (fitnessChoiceBar.getValue(), locationChoiceBar.getValue(), instructorChoiceBar.getValue(), findMember);
-
+        memberTextOutput.appendText(schedule.checkInMember(fitnessChoiceBar.getValue(),
+                locationChoiceBar.getValue(), instructorChoiceBar.getValue(), findMember));
+        clearAllFieldsFitness();
     }
 
-    @FXML
-    public void checkInMember(ActionEvent event)
+    private void checkInMember(ActionEvent event)
     {
+        if(!checkCredsFitness()) {
+            return;
+        }
+        Date DOB = new Date(memberDOB.getValue().toString());
 
+        Member checkMember = new Member(memberFirstName.getText(), memberLastName.getText(),
+                DOB.toString());
+        Member findMember = database.findMember(checkMember);
+        if(!isClassValid(fitnessChoiceBar.getValue(), instructorChoiceBar.getValue(), locationChoiceBar.getValue())){
+            memberTextOutput.appendText("\nClass does not exist.");
+            clearAllFieldsFitness();
+            return;}
+        if(!isMemberValid(findMember, checkMember)){
+            clearAllFieldsFitness();
+            return;}
+        if(!findMember.getLocation().name().equalsIgnoreCase(locationChoiceBar.getValue()) &&
+                !(findMember instanceof Family)) {
+            Location tryCheckIn = Location.getLocation(locationChoiceBar.getValue());
+
+            memberTextOutput.appendText("\n" + findMember.getFirstName() + " " +
+                    findMember.getLastName() + " checking in " +
+                    tryCheckIn.name() + ", " + tryCheckIn.getZipCode() + ", "
+                    + tryCheckIn.getCounty() + " - standard membership " +
+                    "location restriction.");
+            clearAllFieldsFitness();
+            return;
+        }
+        memberTextOutput.appendText("\n" + schedule.checkInMember
+                (fitnessChoiceBar.getValue(), locationChoiceBar.getValue(), instructorChoiceBar.getValue(), findMember));
+        clearAllFieldsFitness();
     }
 
-    @FXML
-    public void checkOutGuest(ActionEvent event)
+    private void checkOutGuest(ActionEvent event)
     {
+        if(!checkCredsFitness()) {
+            return;
+        }
+        Date DOB = new Date(memberDOB.getValue().toString());
+        Member checkMember = new Member(memberFirstName.getText(), memberLastName.getText(),
+                DOB.toString());
+        Member findMember = database.findMember(checkMember);
 
+        if(!isClassValid(fitnessChoiceBar.getValue(), instructorChoiceBar.getValue(), locationChoiceBar.getValue())){
+            memberTextOutput.appendText("\nClass does not exist.");
+            clearAllFieldsFitness();
+            return;}
+        if(findMember == null) {
+            memberTextOutput.appendText("\n" + checkMember.getFirstName() + " " +
+                    checkMember.getLastName() + " " + checkMember.getDOB() +
+                    " is not in the database.");
+            clearAllFieldsFitness();
+            return;
+        }
+        FitnessClass foundFitClass = schedule.findFitnessClass
+                (new FitnessClass(instructorChoiceBar.getValue(), fitnessChoiceBar.getValue(), locationChoiceBar.getValue()));
+        if(foundFitClass == null) {
+            memberTextOutput.appendText("\n" + fitnessChoiceBar.getValue() + " by " + instructorChoiceBar.getValue() + " does " +
+                    "not exist at " + locationChoiceBar.getValue());
+            clearAllFieldsFitness();
+            return;
+        }
+        foundFitClass.removeGuest((Family) findMember);
+        memberTextOutput.appendText("\n" + findMember.getFirstName() + " " +
+                findMember.getLastName() + " Guest done with the class.");
+        clearAllFieldsFitness();
     }
 
-    @FXML
-    public void checkOutMember(ActionEvent event)
+    private void checkOutMember(ActionEvent event)
     {
+        if(!checkCredsFitness()) {
+            return;
+        }
 
+        Date DOB = new Date(memberDOB.getValue().toString());
+        Member checkMember = new Member(memberFirstName.getText(), memberLastName.getText(),
+                DOB.toString());
+        Member findMember = database.findMember(checkMember);
+
+        if(!isClassValid(fitnessChoiceBar.getValue(), instructorChoiceBar.getValue(), locationChoiceBar.getValue())){
+            memberTextOutput.appendText("\nClass does not exist.");
+            clearAllFieldsFitness();
+            return;}
+        if(findMember == null) {
+            memberTextOutput.appendText("\n" + checkMember.getFirstName() + " " +
+                    checkMember.getLastName() + " " + checkMember.getDOB() +
+                    " is not in the database.");
+            clearAllFieldsFitness();
+            return;
+        }
+        FitnessClass foundFitClass = schedule.findFitnessClass
+                (new FitnessClass(instructorChoiceBar.getValue(), fitnessChoiceBar.getValue(), locationChoiceBar.getValue()));
+        if(foundFitClass == null) {
+            memberTextOutput.appendText("\n" + fitnessChoiceBar.getValue() + " by " + instructorChoiceBar.getValue() +
+                    " does not exist at " + locationChoiceBar.getValue());
+            clearAllFieldsFitness();
+            return;
+        }
+        if(foundFitClass.findMember(findMember) == null) {
+            memberTextOutput.appendText("\n" + findMember.getFirstName() + " " +
+                    findMember.getLastName() + " did not check in.");
+            clearAllFieldsFitness();
+            return;
+        }
+        foundFitClass.removeMember(findMember);
+        memberTextOutput.appendText("\n" + findMember.getFirstName() + " " +
+                findMember.getLastName() + " done with the class.");
+        clearAllFieldsFitness();
     }
 
     //c;ears all fields in membership tab besides text area ofc.
@@ -303,6 +423,18 @@ public class GymManagerController implements Initializable {
         myChoiceBar.setValue(null);
         standard.setSelected(true);
     }
+
+    private void clearAllFieldsFitness()
+    {
+        memberFirstName.setText("");
+        memberLastName.setText("");
+        memberDOB.setValue(null);
+        locationChoiceBar.setValue(null);
+        fitnessChoiceBar.setValue(null);
+        instructorChoiceBar.setValue(null);
+        isGuestNo.setSelected(true);
+    }
+
 
     private boolean isAlpha(String name)
     {
@@ -326,13 +458,13 @@ public class GymManagerController implements Initializable {
 
     private boolean isMemberValid(Member findMember, Member checkMember){
         if(findMember == null) {
-            memberTextOutput.appendText(checkMember.getFirstName() + " " +
+            memberTextOutput.appendText("\n" + checkMember.getFirstName() + " " +
                             checkMember.getLastName() + " " + checkMember.getDOB() +
                                         " is not in the database.");
             return false;
         }
         if(findMember.membershipExpired()) {
-            memberTextOutput.appendText(findMember.getFirstName() + " " +
+            memberTextOutput.appendText("\n" + findMember.getFirstName() + " " +
                     findMember.getLastName() + " " + findMember.getDOB() +
                     " membership expired.");
             return false;
