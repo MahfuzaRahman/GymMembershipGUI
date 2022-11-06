@@ -89,8 +89,8 @@ public class GymManagerController implements Initializable {
 
     @FXML
     public void addMember(ActionEvent event) {
-        String firstname = enterFirstName.getText().substring(0,1).toUpperCase() + enterFirstName.getText().substring(1).toLowerCase();
-        String lastname = enterLastName.getText().substring(0,1).toUpperCase() + enterLastName.getText().substring(1).toLowerCase();
+        String firstname = enterFirstName.getText();
+        String lastname = enterLastName.getText();
 
         if(!checkCreds(firstname, lastname)){
             return;
@@ -130,9 +130,6 @@ public class GymManagerController implements Initializable {
     }
 
     private boolean checkCreds(String firstName, String lastName) {
-//        String firstname = enterFirstName.getText();
-//        String lastname = enterLastName.getText();
-
         if(checkEmptyMember(firstName, lastName)){
             memberTextOutput.appendText("Enter member information.\n");
             return false;
@@ -166,9 +163,8 @@ public class GymManagerController implements Initializable {
         return true;
     }
 
+    // this is for the member page.
     private boolean checkEmptyMember(String firstName, String lastName){
-//        String firstName = enterFirstName.getText();
-//        String lastName = enterLastName.getText();
         if(firstName.equals("") && lastName.equals("") &&
                 myDatePicker.getValue() == null && myChoiceBar.getValue() == null)
             return true;
@@ -179,8 +175,8 @@ public class GymManagerController implements Initializable {
     // but what if user wants to add rando location and shi?? like do we disregard that input?
     @FXML
     public void removeMember(ActionEvent event) {
-        String firstName = enterFirstName.getText().substring(0,1).toUpperCase() + enterFirstName.getText().substring(1).toLowerCase();
-        String lastName = enterLastName.getText().substring(0,1).toUpperCase() + enterLastName.getText().substring(1).toLowerCase();
+        String firstName = enterFirstName.getText();
+        String lastName = enterLastName.getText();
 
         if(!checkCreds(firstName, lastName)){
             return;
@@ -196,9 +192,19 @@ public class GymManagerController implements Initializable {
         clearAllFields();
     }
 
-    private boolean checkCredsFitness() {
-        String firstName = enterFirstName.getText().substring(0,1).toUpperCase() + enterFirstName.getText().substring(1).toLowerCase();
-        String lastName = enterLastName.getText().substring(0,1).toUpperCase() + enterLastName.getText().substring(1).toLowerCase();
+
+    private boolean checkEmptyMemberFitness(String firstName, String lastName){
+        if(firstName.equals("") && lastName.equals("") &&
+                myDatePicker.getValue() == null && myChoiceBar.getValue() == null)
+            return true;
+        return false;
+    }
+
+    private boolean checkCredsFitness(String firstName, String lastName) {
+        if(checkEmptyMemberFitness(firstName, lastName)){
+            memberTextOutput.appendText("Enter member information.\n");
+            return false;
+        }
         if(firstName.equals("") || lastName.equals("")){
             memberTextOutput.appendText("Enter a full name.\n");
             clearAllFieldsFitness();
@@ -264,11 +270,11 @@ public class GymManagerController implements Initializable {
     }
 
     private void checkInGuest(ActionEvent event) {
-        if(!checkCredsFitness()) {
-            return;
-        }
         String fname = memberFirstName.getText();
         String lname = memberLastName.getText();
+        if(!checkCredsFitness(fname, lname)) {
+            return;
+        }
         Date DOB = new Date(memberDOB.getValue().toString());
 
         Member checkMember = new Member(fname, lname, DOB.toString());
@@ -300,7 +306,9 @@ public class GymManagerController implements Initializable {
     }
 
     private void checkInMember(ActionEvent event) {
-        if(!checkCredsFitness()) {
+        String fname = memberFirstName.getText();
+        String lname = memberLastName.getText();
+        if(!checkCredsFitness(fname, lname)) {
             return;
         }
         Date DOB = new Date(memberDOB.getValue().toString());
@@ -333,7 +341,9 @@ public class GymManagerController implements Initializable {
     }
 
     private void checkOutGuest(ActionEvent event) {
-        if(!checkCredsFitness()) {
+        String fname = memberFirstName.getText();
+        String lname = memberLastName.getText();
+        if(!checkCredsFitness(fname, lname)) {
             return;
         }
         Date DOB = new Date(memberDOB.getValue().toString());
@@ -367,8 +377,9 @@ public class GymManagerController implements Initializable {
     }
 
     private void checkOutMember(ActionEvent event)
-    {
-        if(!checkCredsFitness()) {
+    {   String fname = memberFirstName.getText();
+        String lname = memberLastName.getText();
+        if(!checkCredsFitness(fname, lname)) {
             return;
         }
 

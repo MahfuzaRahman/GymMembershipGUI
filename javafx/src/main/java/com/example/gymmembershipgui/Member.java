@@ -29,8 +29,8 @@ public class Member implements Comparable<Member> {
      * @param location the member's gym location.
      */
     public Member(String fname, String lname, String dob, String location) {
-        this.fname = fname;
-        this.lname = lname;
+        this.fname = fname.substring(0,1).toUpperCase()+ fname.substring(1).toLowerCase();
+        this.lname = lname.substring(0,1).toUpperCase() + lname.substring(1).toLowerCase();
         this.dob = new Date(dob);
         this.expire = setExpire();
         this.location = Location.getLocation(location);
@@ -46,8 +46,8 @@ public class Member implements Comparable<Member> {
      */
     public Member(String fname, String lname, String dob,
                   String expire, String location) {
-        this.fname = fname;
-        this.lname = lname;
+        this.fname = fname.substring(0,1).toUpperCase()+ fname.substring(1).toLowerCase();
+        this.lname = lname.substring(0,1).toUpperCase() + lname.substring(1).toLowerCase();
         this.dob = new Date(dob);
         this.expire = new Date(expire);
         this.location = Location.getLocation(location);
@@ -60,8 +60,8 @@ public class Member implements Comparable<Member> {
      * @param dob the member's date of birth in mm/dd/yyyy format.
      */
     public Member(String fname, String lname, String dob) {
-        this.fname = fname;
-        this.lname = lname;
+        this.fname = fname.substring(0,1).toUpperCase()+ fname.substring(1).toLowerCase();
+        this.lname = lname.substring(0,1).toUpperCase() + lname.substring(1).toLowerCase();
         this.dob = new Date(dob);
         this.expire = null;
         this.location = null;
