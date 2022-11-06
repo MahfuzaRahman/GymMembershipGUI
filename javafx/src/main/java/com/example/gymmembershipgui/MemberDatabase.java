@@ -139,7 +139,8 @@ public class MemberDatabase {
      * Sorts the list by membership expiration using in-place insertion sort.
      * Iterates through the list of members and prints each member.
      */
-    public void printByExpirationDate() {
+    public String printByExpirationDate() {
+        String output = "";
         for(int i = 1; i < size; i++){
             Member keyMember = mlist[i];
             int j = i - 1;
@@ -149,11 +150,12 @@ public class MemberDatabase {
                 mlist[j+1] = mlist[j--];
             mlist[j + 1] = keyMember;
         }
-        System.out.println("\n-list of members sorted by membership " +
-                "expiration date-");
+        output += "\n-list of members sorted by membership " +
+                "expiration date-\n";
         for(int i = 0; i < size; i++)
-            System.out.println(mlist[i].toString());
-        System.out.println("-end of list-\n");
+            output += mlist[i].toString() + "\n";
+        output += "-end of list-\n";
+        return output;
     }
 
     /**
