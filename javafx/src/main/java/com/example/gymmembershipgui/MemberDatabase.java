@@ -1,5 +1,9 @@
 package com.example.gymmembershipgui;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 /**
  * MemberDatabase manages the members at a gym, or in a fitness class.
  * Each database is defined with an array of members as well as a size of the
@@ -28,6 +32,24 @@ public class MemberDatabase {
     public MemberDatabase() {
         mlist = new Member[INITIAL_LENGTH];
         size = INITIAL_SIZE;
+    }
+
+    public String loadMemberList(String fileName) throws FileNotFoundException {
+        File file = new File(fileName);
+        Scanner infile = new Scanner(file);
+        String input;
+        String output;
+
+        while(infile.hasNextLine()) {
+            input = infile.nextLine();
+            String[] arrInput = input.split("\\s+", 0);
+            Member addMember = new Member(arrInput[0], arrInput[1],
+                    arrInput[2], arrInput[3], arrInput[4]);
+            add(addMember);
+        }
+        output = "\n-list of members loaded-\n";
+        output += this + "-end of list-\n";
+        return output;
     }
 
     /**
@@ -105,11 +127,13 @@ public class MemberDatabase {
      * Displays the list of members in database.
      * Iterates through the list of members and prints each member.
      */
-    public void print() {
-        System.out.println("\n-list of members-");
+    public String print() {
+        String output = "";
+        output += "\n-list of members-\n";
         for(int i = 0; i < size; i++)
-            System.out.println(mlist[i].toString());
-        System.out.println("-end of list-\n");
+            output += mlist[i].toString() + "\n";
+        output += "-end of list-\n";
+        return output;
     }
 
     /**
@@ -117,7 +141,8 @@ public class MemberDatabase {
      * Sorts the list by county and zip code using in-place insertion sort.
      * Iterates through the list of members and prints each member.
      */
-    public void printByCounty() {
+    public String printByCounty() {
+        String output = "";
         for(int i = 1; i < size; i++){
             Member keyMember = mlist[i];
             int j = i - 1;
@@ -127,11 +152,12 @@ public class MemberDatabase {
                 mlist[j+1] = mlist[j--];
             mlist[j + 1] = keyMember;
         }
-        System.out.println("\n-list of members sorted by county and " +
-                "zipcode-");
+        output += "\n-list of members sorted by county and " +
+                "zipcode-\n";
         for(int i = 0; i < size; i++)
-            System.out.println(mlist[i].toString());
-        System.out.println("-end of list-\n");
+            output += mlist[i].toString() + "\n";
+        output += "-end of list-\n";
+        return output;
     }
 
     /**
@@ -163,7 +189,8 @@ public class MemberDatabase {
      * Sorts the list by last and then first name using in-place insertion
      * sort. Iterates through the list of members and prints each member.
      */
-    public void printByName() {
+    public String printByName() {
+        String output = "";
         for(int i = 1; i < size; ++i){
             Member keyMember = mlist[i];
             int j = i - 1;
@@ -172,11 +199,12 @@ public class MemberDatabase {
                 mlist[j+1] = mlist[j--];
             mlist[j + 1] = keyMember;
         }
-        System.out.println("\n-list of members sorted by last name, and " +
-                "first name-");
+        output += "\n-list of members sorted by last name, and " +
+                "first name-\n";
         for(int i = 0; i < size; i++)
-            System.out.println(mlist[i].toString());
-        System.out.println("-end of list-\n");
+            output += mlist[i].toString() + "\n";
+        output += "-end of list-\n";
+        return output;
     }
 
     /**
@@ -184,7 +212,8 @@ public class MemberDatabase {
      * Sorts the list by membership fees using in-place insertion sort.
      * Iterates through the list of members and prints each member.
      */
-    public void printByMembershipFee(){
+    public String printByMembershipFee(){
+        String output = "";
         for(int i = 1; i < size; ++i){
             Member keyMember = mlist[i];
             int j = i - 1;
@@ -193,7 +222,7 @@ public class MemberDatabase {
                 mlist[j+1] = mlist[j--];
             mlist[j + 1] = keyMember;
         }
-        System.out.println("\n-list of members with membership fees-");
+        output += "\n-list of members with membership fees-\n";
         for(int i = 0; i < size; i++){
             String membershipInfo;
             if(mlist[i] instanceof Premium){
@@ -208,9 +237,10 @@ public class MemberDatabase {
                 membershipInfo = "Membership fee: $" +
                         mlist[i].membershipFee();
             }
-            System.out.println(mlist[i].toString() + ", " + membershipInfo);
+            output += mlist[i].toString() + ", " + membershipInfo + "\n";
         }
-        System.out.println("-end of list-\n");
+        output += "-end of list-\n";
+        return output;
     }
 
     /**

@@ -1,5 +1,9 @@
 package com.example.gymmembershipgui;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 /**
  * Defines a schedule with array of classes and int with num of classes.
  * For each ClassSchedule, a class can be added to the schedule, can find
@@ -25,6 +29,21 @@ public class ClassSchedule {
     public ClassSchedule(){
         classes = new FitnessClass[INITIAL_LENGTH];
         numClasses = INITIAL_SIZE;
+    }
+
+    public void loadClassSchedule(String fileName) throws FileNotFoundException {
+        File file = new File(fileName);
+        Scanner infile = new Scanner(file);
+        String input;
+
+        while(infile.hasNextLine()) {
+            input = infile.nextLine();
+            if(!input.equals("")) {
+                String[] arrInput = input.split(" ", 0);
+                addFitnessClass(arrInput[0], arrInput[1], arrInput[2],
+                        arrInput[3]);
+            }
+        }
     }
 
     /**
@@ -148,7 +167,6 @@ public class ClassSchedule {
 //        }
 //        return checkTimeConflict(foundClass, addMember);
 //    }
-
     private String checkFitnessClass(String fClass, String location,
                                       String instructor, Member addMember) {
         FitnessClass findClass = new FitnessClass(fClass, instructor,
@@ -267,17 +285,22 @@ public class ClassSchedule {
         return numClasses;
     }
 
+    public boolean isEmpty(){
+        return numClasses == 0;
+    }
+
     /**
      * Creates a String that contains all fitness classes on the schedule.
      * @return String containing fitness classes and their details.
      */
     @Override
     public String toString() {
-        String schedule = "";
+        String schedule = "-Fitness classes loaded-\n";
         for(FitnessClass fc : classes) {
             if(fc != null)
                 schedule += fc + "\n";
         }
+        schedule += "-end of class list.\n";
         return schedule;
     }
 }

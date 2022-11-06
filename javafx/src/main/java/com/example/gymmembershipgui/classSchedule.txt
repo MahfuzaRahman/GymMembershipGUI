@@ -1,0 +1,16 @@
+Pilates Jennifer morning Bridgewater
+Spinning Jennifer afternoon Piscataway
+Cardio Jennifer evening Somerville
+Pilates Kim morning Franklin
+Spinning Kim afternoon Franklin
+Cardio Kim evening Piscataway
+Pilates Davis morning Piscataway
+Pilates Davis afternoon Edison
+Cardio Davis evening Bridgewater
+Spinning Denise morning Bridgewater
+Cardio Denise afternoon Somerville
+Spinning Denise evening Edison
+Spinning Emma morning Franklin
+Pilates Emma afternoon Edison
+Cardio Emma evening Edison
+

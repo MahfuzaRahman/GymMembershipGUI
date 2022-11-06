@@ -169,18 +169,18 @@
                              <menus>
                                <Menu mnemonicParsing="false" text="Member Database">
                                  <items>
-                                   <MenuItem mnemonicParsing="false" text="Print" />
-                                       <MenuItem mnemonicParsing="false" text="Print by County/Zipcode" />
-                                       <MenuItem mnemonicParsing="false" text="Print by Last/First Names" />
+                                   <MenuItem mnemonicParsing="false" onAction="#onPrintClicked" text="Print" />
+                                       <MenuItem mnemonicParsing="false" onAction="#onPrintCountyClicked" text="Print by County/Zipcode" />
+                                       <MenuItem mnemonicParsing="false" onAction="#onPrintNameClicked" text="Print by Last/First Names" />
                                        <MenuItem fx:id="printExpDate" mnemonicParsing="false" onAction="#onPrintExpDateClicked" text="Print by Expiration Date" />
-                                       <MenuItem mnemonicParsing="false" text="Print by Membership Fee" />
-                                       <MenuItem mnemonicParsing="false" text="Load Memberlist From File" />
+                                       <MenuItem mnemonicParsing="false" onAction="#onPrintFeeClicked" text="Print by Membership Fee" />
+                                       <MenuItem mnemonicParsing="false" onAction="#onLoadMemberListClicked" text="Load Memberlist From File" />
                                  </items>
                                </Menu>
                                <Menu mnemonicParsing="false" text="Class Schedule">
                                  <items>
-                                   <MenuItem mnemonicParsing="false" text="Show All Classes" />
-                                       <MenuItem mnemonicParsing="false" text="Load Class Schedule From File" />
+                                   <MenuItem mnemonicParsing="false" onAction="#showAllClasses" text="Show All Classes" />
+                                       <MenuItem mnemonicParsing="false" onAction="#onLoadClassScheduleClicked" text="Load Class Schedule From File" />
                                  </items>
                                </Menu>
                              </menus>

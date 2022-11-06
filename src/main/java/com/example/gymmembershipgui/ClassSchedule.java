@@ -1,5 +1,9 @@
 package com.example.gymmembershipgui;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 /**
  * Defines a schedule with array of classes and int with num of classes.
  * For each ClassSchedule, a class can be added to the schedule, can find
@@ -216,6 +220,7 @@ public class ClassSchedule {
         }
         return null;
     }
+
 
     /**
      * Gets the number of FitnessClass objects in the classes array.

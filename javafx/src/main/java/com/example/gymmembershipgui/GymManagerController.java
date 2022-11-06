@@ -5,8 +5,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.event.ActionEvent;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 public class GymManagerController implements Initializable {
 
@@ -124,7 +127,7 @@ public class GymManagerController implements Initializable {
         }
         else{
             //added dob to this so easier to test
-            memberTextOutput.appendText(firstname + " " + lastname + " " + DOB.toString() + " added.\n");
+            memberTextOutput.appendText(firstname + " " + lastname + " " + DOB + " added.\n");
         }
         clearAllFields();
     }
@@ -151,12 +154,12 @@ public class GymManagerController implements Initializable {
         }
         Date DOB = new Date(myDatePicker.getValue().toString());
         if(DOB.compareTo(new Date()) >=0){
-            memberTextOutput.appendText("DOB cannot be today or future day.\n");
+            memberTextOutput.appendText("DOB " + DOB + ": cannot be today or a future date.\n");
             clearAllFields();
             return false;
         }
         if(!DOB.aboveEighteen()){
-            memberTextOutput.appendText("Member must be older than 18.\n");
+            memberTextOutput.appendText("DOB " + DOB + ": must be 18 or older to join!\n\n");
             clearAllFields();
             return false;
         }
@@ -188,7 +191,9 @@ public class GymManagerController implements Initializable {
         if(!database.remove(removeThem)) {
             memberTextOutput.appendText("Member is not in the database.\n");
         }
-        memberTextOutput.appendText("Member is removed.\n");
+        else{
+            memberTextOutput.appendText("Member is removed.\n");
+        }
         clearAllFields();
     }
 
@@ -475,8 +480,62 @@ public class GymManagerController implements Initializable {
     }
 
     @FXML
+    public void onPrintClicked(){
+        memberTextOutput.appendText(database.print());
+    }
+
+    @FXML
+    public void onPrintCountyClicked(){
+        memberTextOutput.appendText(database.printByCounty());
+    }
+
+    @FXML
+    public void onPrintNameClicked(){
+        memberTextOutput.appendText(database.printByName());
+    }
+
+    @FXML
     public void onPrintExpDateClicked(){
         memberTextOutput.appendText(database.printByExpirationDate());
+    }
+
+    @FXML
+    public void onPrintFeeClicked(){
+        memberTextOutput.appendText(database.printByMembershipFee());
+    }
+
+    @FXML
+    public void onLoadMemberListClicked(){
+        String file = "./javafx/src/main/java/com/example/gymmembershipgui/memberList.txt";
+        try{
+            memberTextOutput.appendText(database.loadMemberList(file));
+        } catch (FileNotFoundException e) {
+            memberTextOutput.appendText("Member list file not found.");
+        }
+
+    }
+
+    @FXML
+    public void showAllClasses(){
+        if(schedule.isEmpty()){
+            memberTextOutput.appendText("There are no fitness classes " +
+                    "loaded on the schedule.\n");
+        } else {
+            memberTextOutput.appendText(schedule.toString());
+        }
+
+    }
+
+    @FXML
+    public void onLoadClassScheduleClicked(){
+        String file = "./javafx/src/main/java/com/example/gymmembershipgui/classSchedule.txt";
+        try{
+            schedule.loadClassSchedule(file);
+            memberTextOutput.appendText(schedule.toString());
+        } catch (FileNotFoundException e) {
+            memberTextOutput.appendText("Class schedule file not found.");
+        }
+
     }
 
     @Override
