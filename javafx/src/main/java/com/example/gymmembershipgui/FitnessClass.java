@@ -119,9 +119,10 @@ public class FitnessClass {
         if(guest.getNumberOfPasses() == 0)
             return name + " ran out of guest pass.\n";
 
+        this.guests.add(guest);
         String output = (name + " (guest) checked in " +
                 getClassName() + " - " + getInstructorName() + ", " +
-                getTime() + ", " + getLocation());
+                getTime() + ", " + getLocation() + "\n");
         output += getClassParticipantsAndGuests();
         guest.useGuestPass();
         return output;
@@ -189,7 +190,7 @@ public class FitnessClass {
         if(!instructorName.equalsIgnoreCase(checkClass.getInstructorName())) {
             return false;
         }
-        if(!location.name().equals(checkClass.getLocation())) {
+        if(!location.name().equalsIgnoreCase(checkClass.getLocation())) {
             return false;
         }
         return true;
@@ -207,15 +208,15 @@ public class FitnessClass {
         String body = "";
         String header = "";
         for(int i = 0; i < participants.toArray().length; i++)
-            body += "\n\t" + participants.toArray()[i];
+            body += "\t" + participants.toArray()[i] + "\n";
         if(body.length() > 0){
-            header += "- Participants -";
-            body += "\n";
+            header += ("- Participants -\n");
+            //body += "\n";
         }
         if(guests.size() > 0)
-            body += "- Guests -";
+            body += "- Guests -\n";
         for(int i = 0; i < guests.toArray().length; i++)
-            body += "\n\t" + guests.toArray()[i];
+            body += "\t" + guests.toArray()[i] + "\n";
         return (header + body + "\n");
     }
 

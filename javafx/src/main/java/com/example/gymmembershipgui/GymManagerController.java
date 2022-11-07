@@ -51,7 +51,7 @@ public class GymManagerController implements Initializable {
         locations = new String[] {"Bridgewater", "Edison", "Franklin",
                 "Piscataway", "Somerville"};
         fitnessClasses = new String[] {"Cardio", "Pilates", "Spinning"};
-        instructors = new String[] {"Jeniffer", "Kim", "Davis", "Denise",
+        instructors = new String[] {"Jennifer", "Kim", "Davis", "Denise",
                 "Emma"};
     }
 
@@ -425,8 +425,10 @@ public class GymManagerController implements Initializable {
 
     private boolean isClassValid(String className, String instructor, String location){
         FitnessClass fitnessClass = new FitnessClass(instructor, className, location);
+
         if(schedule.findFitnessClass(fitnessClass) == null){
-            output.appendText("Class does not exist.\n");
+            output.appendText(className + " by " + instructor + " does not " +
+                    "exist at " + location);
             clearAllFieldsFitness();
             return false;
         }

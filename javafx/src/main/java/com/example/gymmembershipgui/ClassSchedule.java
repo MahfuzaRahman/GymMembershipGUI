@@ -95,9 +95,9 @@ public class ClassSchedule {
      * @return FitnessClass class if found, null otherwise.
      */
     public FitnessClass findFitnessClass(FitnessClass fitnessClass){
-        for (int i = 0; i < numClasses; i++) {
-            if (classes[i].equals(fitnessClass))
-                return classes[i];
+        for (int i = 0; i < classes.length; i++) {
+            if (classes[i] != null && classes[i].equals(fitnessClass)){
+                return classes[i];}
         }
         return null;
     }
