@@ -118,13 +118,12 @@ public class FitnessClass {
         String name = firstName + " " + lastName;
         if(guest.getNumberOfPasses() == 0)
             return name + " ran out of guest pass.\n";
-
-        this.guests.add(guest);
+        guest.useGuestPass();
+        guests.add(guest);
         String output = (name + " (guest) checked in " +
                 getClassName() + " - " + getInstructorName() + ", " +
                 getTime() + ", " + getLocation() + "\n");
         output += getClassParticipantsAndGuests();
-        guest.useGuestPass();
         return output;
     }
 
