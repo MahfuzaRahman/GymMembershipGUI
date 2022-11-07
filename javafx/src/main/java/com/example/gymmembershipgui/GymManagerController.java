@@ -255,21 +255,22 @@ public class GymManagerController implements Initializable {
     }
 
     private void checkOutGuest(ActionEvent event) {
-        // WORKING HERE
-        String fname = memberFirstName.getText();
-        String lname = memberLastName.getText();
-        if(!checkCredsFitness(fname, lname)) {
+        String firstName = memberFirstName.getText();
+        String lastName = memberLastName.getText();
+        String instructor = instructorChoiceBar.getValue();
+        String fitness = fitnessChoiceBar.getValue();
+        String location = classLocationChoiceBar.getValue();
+
+        if(!checkCredsFitness(firstName, lastName))
             return;
-        }
+
         Date DOB = new Date(classMemberDOBPicker.getValue().toString());
-        Member checkMember = new Member(memberFirstName.getText(), memberLastName.getText(),
-                DOB.toString());
+        Member checkMember = new Member(firstName, lastName, DOB.toString());
         Member findMember = database.findMember(checkMember);
 
-        if(!isClassValid(fitnessChoiceBar.getValue(), instructorChoiceBar.getValue(), classLocationChoiceBar.getValue())){
-            output.appendText("Class does not exist.\n");
-            clearAllFieldsFitness();
-            return;}
+        if(!isClassValid(fitness, instructor, location))
+            return;
+
         if(findMember == null) {
             output.appendText(checkMember.getFirstName() + " " +
                     checkMember.getLastName() + " " + checkMember.getDOB() +
