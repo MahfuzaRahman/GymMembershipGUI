@@ -141,6 +141,13 @@ public class FitnessClass {
         return participants.get(memberIndex);
     }
 
+    public Family findGuest(Family guest) {
+        int guestIndex = guests.indexOf(guest);
+        if(guestIndex == -1)
+            return null;
+        return guests.get(guestIndex);
+    }
+
     /**
      * Deletes a member from the fitness class.
      * Member is removed from the list of participants in the class.

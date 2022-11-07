@@ -257,6 +257,7 @@ public class GymManagerController implements Initializable {
     private void checkOutGuest(ActionEvent event) {
         String firstName = memberFirstName.getText();
         String lastName = memberLastName.getText();
+        String name = firstName + " " + lastName;
         String instructor = instructorChoiceBar.getValue();
         String fitness = fitnessChoiceBar.getValue();
         String location = classLocationChoiceBar.getValue();
@@ -270,69 +271,66 @@ public class GymManagerController implements Initializable {
 
         if(!isClassValid(fitness, instructor, location))
             return;
+        if(!isMemberValid(findMember, checkMember))
+            return;
 
-        if(findMember == null) {
-            output.appendText(checkMember.getFirstName() + " " +
-                    checkMember.getLastName() + " " + checkMember.getDOB() +
-                    " is not in the database.\n");
+        FitnessClass fitnessClass = schedule.findFitnessClass
+                (new FitnessClass(instructor, fitness, location));
+        if(fitnessClass == null) {
+            output.appendText(fitness + " by " + instructor + " does not " +
+                    "exist at " + location + ".\n");
             clearAllFieldsFitness();
             return;
         }
-        FitnessClass foundFitClass = schedule.findFitnessClass
-                (new FitnessClass(instructorChoiceBar.getValue(), fitnessChoiceBar.getValue(), classLocationChoiceBar.getValue()));
-        if(foundFitClass == null) {
-            output.appendText(fitnessChoiceBar.getValue() + " by " + instructorChoiceBar.getValue() + " does " +
-                    "not exist at " + classLocationChoiceBar.getValue() + "\n");
+        if(fitnessClass.findGuest((Family)findMember) == null) {
+            output.appendText(findMember.getFirstName() + " " +
+                    findMember.getLastName() + " did not check in.\n");
             clearAllFieldsFitness();
             return;
         }
-        foundFitClass.removeGuest((Family) findMember);
-        output.appendText(findMember.getFirstName() + " " +
-                findMember.getLastName() + " Guest done with the class.\n");
+        fitnessClass.removeGuest((Family) findMember);
+        output.appendText(name + " Guest done with the class.\n");
         clearAllFieldsFitness();
     }
 
-    private void checkOutMember(ActionEvent event)
-    {   String fname = memberFirstName.getText();
-        String lname = memberLastName.getText();
-        if(!checkCredsFitness(fname, lname)) {
+    private void checkOutMember(ActionEvent event) {
+        String firstName = memberFirstName.getText();
+        String lastName = memberLastName.getText();
+        String name = firstName + " " + lastName;
+        String instructor = instructorChoiceBar.getValue();
+        String fitness = fitnessChoiceBar.getValue();
+        String location = classLocationChoiceBar.getValue();
+
+        if(!checkCredsFitness(firstName, lastName))
             return;
-        }
 
         Date DOB = new Date(classMemberDOBPicker.getValue().toString());
         Member checkMember = new Member(memberFirstName.getText(), memberLastName.getText(),
                 DOB.toString());
         Member findMember = database.findMember(checkMember);
 
-        if(!isClassValid(fitnessChoiceBar.getValue(), instructorChoiceBar.getValue(), classLocationChoiceBar.getValue())){
-            output.appendText("Class does not exist.\n");
+        if(!isClassValid(fitness, instructor, location))
+            return;
+        if(!isMemberValid(findMember, checkMember))
+            return;
+
+        FitnessClass fitnessClass = schedule.findFitnessClass
+                (new FitnessClass(instructor, fitness, location));
+        if(fitnessClass == null) {
+            output.appendText(fitness + " by " + instructor + " does not " +
+                    "exist at " + location + ".\n");
             clearAllFieldsFitness();
             return;
         }
-        if(findMember == null) {
-            output.appendText(checkMember.getFirstName() + " " +
-                    checkMember.getLastName() + " " + checkMember.getDOB() +
-                    " is not in the database.\n");
-            clearAllFieldsFitness();
-            return;
-        }
-        FitnessClass foundFitClass = schedule.findFitnessClass
-                (new FitnessClass(instructorChoiceBar.getValue(), fitnessChoiceBar.getValue(), classLocationChoiceBar.getValue()));
-        if(foundFitClass == null) {
-            output.appendText(fitnessChoiceBar.getValue() + " by " + instructorChoiceBar.getValue() +
-                    " does not exist at " + classLocationChoiceBar.getValue() + ".\n");
-            clearAllFieldsFitness();
-            return;
-        }
-        if(foundFitClass.findMember(findMember) == null) {
+        // wait here
+        if(fitnessClass.findMember(findMember) == null) {
             output.appendText(findMember.getFirstName() + " " +
                     findMember.getLastName() + " did not check in.\n");
             clearAllFieldsFitness();
             return;
         }
-        foundFitClass.removeMember(findMember);
-        output.appendText(findMember.getFirstName() + " " +
-                findMember.getLastName() + " done with the class.\n");
+        fitnessClass.removeMember(findMember);
+        output.appendText(name + " done with the class.\n");
         clearAllFieldsFitness();
     }
 
