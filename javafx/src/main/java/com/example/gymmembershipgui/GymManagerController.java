@@ -39,7 +39,7 @@ public class GymManagerController implements Initializable {
 
     private String[] fitnessClasses = {"Cardio", "Pilates", "Spinning"};
 
-    private String[] instructors = {"Jeniffer", "Kim", "Dennis", "Denise", "Emma"};
+    private String[] instructors = {"Jeniffer", "Kim", "Davis", "Denise", "Emma"};
 
     @FXML
     private RadioButton standard;
@@ -185,6 +185,12 @@ public class GymManagerController implements Initializable {
             return;
         }
 
+        if(myChoiceBar.getValue() != null || !standard.isSelected()) {
+            memberTextOutput.appendText("Try again. Only input name and date of birth when removing a member\n");
+            clearAllFields();
+            return;
+        }
+
         Date DOB = new Date(myDatePicker.getValue().toString());
 
         Member removeThem = new Member(firstName, lastName, DOB.toString());
@@ -198,7 +204,6 @@ public class GymManagerController implements Initializable {
 
         clearAllFields();
     }
-
 
     private boolean checkEmptyMemberFitness(String firstName, String lastName){
         if(firstName.equals("") && lastName.equals("") &&
@@ -284,32 +289,64 @@ public class GymManagerController implements Initializable {
         }
         Date DOB = new Date(memberDOB.getValue().toString());
 
-        Member checkMember = new Member(fname, lname, DOB.toString());
-        Member findMember = database.findMember(checkMember);
-        if(!isClassValid(fitnessChoiceBar.getValue(), instructorChoiceBar.getValue(), locationChoiceBar.getValue())) {
-            memberTextOutput.appendText("Class does not exist.\n");
-            clearAllFieldsFitness();
-            return;
-        }
-        if(!isMemberValid(findMember, checkMember)) {
-            clearAllFieldsFitness();
-            return;
-        }
-        if(!findMember.getLocation().name().equalsIgnoreCase(locationChoiceBar.getValue()) &&
-                !(findMember instanceof Family)) {
-            Location tryCheckIn = Location.getLocation(locationChoiceBar.getValue());
+        FitnessClass fitClass = new FitnessClass(instructorChoiceBar.getValue(), fitnessChoiceBar.getValue(),
+                locationChoiceBar.getValue());
 
-            memberTextOutput.appendText(findMember.getFirstName() + " " +
-                    findMember.getLastName() + " checking in " +
-                    tryCheckIn.name() + ", " + tryCheckIn.getZipCode() + ", "
-                    + tryCheckIn.getCounty() + " - standard membership " +
-                    "location restriction.\n");
+        Member checkMember = new Member(fname, lname,
+                DOB.toString());
+        Member findMember = database.findMember(checkMember);
+
+        if(!(findMember instanceof Family)){
+            memberTextOutput.appendText("Standard membership - guest check-in is " +
+                    "not allowed.\n");
             clearAllFieldsFitness();
             return;
         }
-        memberTextOutput.appendText(schedule.checkInMember(fitnessChoiceBar.getValue(),
-                locationChoiceBar.getValue(), instructorChoiceBar.getValue(), findMember));
-        clearAllFieldsFitness();
+        if(!findMember.getLocation().name().equalsIgnoreCase(locationChoiceBar.getValue())) {
+            Location tryCheckIn = Location.getLocation(locationChoiceBar.getValue());
+            memberTextOutput.appendText(findMember.getFirstName() + " " +
+                    findMember.getLastName() + " Guest checking in " +
+                    tryCheckIn.name() + ", " + tryCheckIn.getZipCode() + ", "
+                    + tryCheckIn.getCounty() + " - guest location " +
+                    "restriction.\n");
+            clearAllFieldsFitness();
+            return;
+        }
+        if(((Family) findMember).getNumberOfPasses() == 0){
+            memberTextOutput.appendText(findMember.getFirstName() + " " +
+                    findMember.getLastName() + " ran out of guest pass.\n");
+            clearAllFieldsFitness();
+            return;
+        }
+        memberTextOutput.appendText(schedule.checkInGuest((Family) findMember, fitClass));
+
+
+//        Member checkMember = new Member(fname, lname, DOB.toString());
+//        Member findMember = database.findMember(checkMember);
+//        if(!isClassValid(fitnessChoiceBar.getValue(), instructorChoiceBar.getValue(), locationChoiceBar.getValue())) {
+//            memberTextOutput.appendText("Class does not exist.\n");
+//            clearAllFieldsFitness();
+//            return;
+//        }
+//        if(!isMemberValid(findMember, checkMember)) {
+//            clearAllFieldsFitness();
+//            return;
+//        }
+//        if(!findMember.getLocation().name().equalsIgnoreCase(locationChoiceBar.getValue()) &&
+//                !(findMember instanceof Family)) {
+//            Location tryCheckIn = Location.getLocation(locationChoiceBar.getValue());
+//
+//            memberTextOutput.appendText(findMember.getFirstName() + " " +
+//                    findMember.getLastName() + " checking in " +
+//                    tryCheckIn.name() + ", " + tryCheckIn.getZipCode() + ", "
+//                    + tryCheckIn.getCounty() + " - standard membership " +
+//                    "location restriction.\n");
+//            clearAllFieldsFitness();
+//            return;
+//        }
+//        memberTextOutput.appendText(schedule.checkInMember(fitnessChoiceBar.getValue(),
+//                locationChoiceBar.getValue(), instructorChoiceBar.getValue(), findMember));
+//        clearAllFieldsFitness();
     }
 
     private void checkInMember(ActionEvent event) {
@@ -432,6 +469,7 @@ public class GymManagerController implements Initializable {
         enterLastName.setText("");
         myDatePicker.setValue(null);
         myChoiceBar.setValue(null);
+        myChoiceBar.setVisible(true);
         standard.setSelected(true);
     }
 
