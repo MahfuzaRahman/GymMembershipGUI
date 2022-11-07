@@ -91,7 +91,7 @@ public class GymManagerController implements Initializable {
     }
 
     @FXML
-    public void addMember(ActionEvent event) {
+    public void addMember(ActionEvent event) throws InterruptedException{
         String firstname = enterFirstName.getText();
         String lastname = enterLastName.getText();
 
@@ -143,12 +143,12 @@ public class GymManagerController implements Initializable {
             return false;
         }
         if(!isAlpha(firstName) || !isAlpha(lastName)){
-            memberTextOutput.appendText("Names should not include special characters.\n");
+            memberTextOutput.appendText("Names should not include special characters, spaces, or numbers.\n");
             clearAllFields();
             return false;
         }
         if(myDatePicker.getValue() == null) {
-            memberTextOutput.appendText("Enter a valid date.\n");
+            memberTextOutput.appendText("Enter a date of birth.\n");
             clearAllFields();
             return false;
         }
@@ -177,7 +177,7 @@ public class GymManagerController implements Initializable {
     //only need name and dob to remove
     // but what if user wants to add rando location and shi?? like do we disregard that input?
     @FXML
-    public void removeMember(ActionEvent event) {
+    public void removeMember(ActionEvent event) throws InterruptedException{
         String firstName = enterFirstName.getText();
         String lastName = enterLastName.getText();
 
@@ -188,12 +188,14 @@ public class GymManagerController implements Initializable {
         Date DOB = new Date(myDatePicker.getValue().toString());
 
         Member removeThem = new Member(firstName, lastName, DOB.toString());
+
         if(!database.remove(removeThem)) {
             memberTextOutput.appendText("Member is not in the database.\n");
         }
         else{
             memberTextOutput.appendText("Member is removed.\n");
         }
+
         clearAllFields();
     }
 

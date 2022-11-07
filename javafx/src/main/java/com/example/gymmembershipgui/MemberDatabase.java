@@ -218,7 +218,7 @@ public class MemberDatabase {
             Member keyMember = mlist[i];
             int j = i - 1;
             // Move each member alphabetically ahead of the key member up
-            while(j >= 0 && mlist[j].compareTo(keyMember) > 0)
+            while(j >= 0 && mlist[j].membershipFee() > keyMember.membershipFee())
                 mlist[j+1] = mlist[j--];
             mlist[j + 1] = keyMember;
         }
