@@ -112,11 +112,19 @@ public class FitnessClass {
      * @param guest the guest that is being added to the fitness class.
      * @return true once the member is added to guests arrayList.
      */
-    public boolean checkInGuest(Family guest){
+    public String checkInGuest(Family guest){
+        String firstName = guest.getFirstName();
+        String lastName = guest.getLastName();
+        String name = firstName + " " + lastName;
         if(guest.getNumberOfPasses() == 0)
-            return false;
+            return name + " ran out of guest pass.\n";
+
+        String output = (name + " (guest) checked in " +
+                getClassName() + " - " + getInstructorName() + ", " +
+                getTime() + ", " + getLocation());
+        output += getClassParticipantsAndGuests();
         guest.useGuestPass();
-        return guests.add(guest);
+        return output;
     }
 
     /**

@@ -243,18 +243,18 @@ public class ClassSchedule {
      * @param fitClass the class the guest wants to check into.
      * @return true when the guest is checked in.
      */
-    public String checkInGuest(Family guest, FitnessClass fitClass){
-        FitnessClass fitnessClass = findFitnessClass(fitClass);
-        fitnessClass.checkInGuest(guest);
-        String output;
-        output = (guest.getFirstName() + " " +
-                guest.getLastName() + " (guest) checked in " +
-                fitnessClass.getClassName() + " - " +
-                fitnessClass.getInstructorName() + ", " +
-                fitnessClass.getTime() + ", " + fitnessClass.getLocation());
-        output += (fitnessClass.getClassParticipantsAndGuests());
-        return output;
-    }
+//    public String checkInGuest(Family guest, FitnessClass fitClass){
+//        FitnessClass fitnessClass = findFitnessClass(fitClass);
+//        fitnessClass.checkInGuest(guest);
+//        String output;
+//        output = (guest.getFirstName() + " " +
+//                guest.getLastName() + " (guest) checked in " +
+//                fitnessClass.getClassName() + " - " +
+//                fitnessClass.getInstructorName() + ", " +
+//                fitnessClass.getTime() + ", " + fitnessClass.getLocation());
+//        output += (fitnessClass.getClassParticipantsAndGuests());
+//        return output;
+//    }
 
 
     /**

@@ -138,40 +138,40 @@ public class GymManager {
      * @param input a String with guest's first and last name, class, DOB,
      *              fitness class name, instructor, and location.
      */
-    public void checkInGuest(String input) {
-        String[] arrInput = input.split(" ", 0);
-        String className = arrInput[1];
-        String instructor = arrInput[2];
-        String location = arrInput[3];
-        FitnessClass fitClass = new FitnessClass(instructor, className,
-                location);
-
-        Member checkMember = new Member(arrInput[4], arrInput[5],
-                arrInput[6]);
-        Member findMember = database.findMember(checkMember);
-
-        if(!(findMember instanceof Family)){
-            System.out.println("Standard membership - guest check-in is " +
-                    "not allowed.");
-            return;
-        }
-        if(!findMember.getLocation().name().equalsIgnoreCase(location)) {
-            Location tryCheckIn = Location.getLocation(location);
-            System.out.println(findMember.getFirstName() + " " +
-                    findMember.getLastName() + " Guest checking in " +
-                    tryCheckIn.name() + ", " + tryCheckIn.getZipCode() + ", "
-                    + tryCheckIn.getCounty() + " - guest location " +
-                    "restriction.");
-            return;
-        }
-
-        if(((Family) findMember).getNumberOfPasses() == 0){
-            System.out.println(findMember.getFirstName() + " " +
-                    findMember.getLastName() + " ran out of guest pass.");
-            return;
-        }
-        schedule.checkInGuest((Family) findMember, fitClass);
-    }
+//    public void checkInGuest(String input) {
+//        String[] arrInput = input.split(" ", 0);
+//        String className = arrInput[1];
+//        String instructor = arrInput[2];
+//        String location = arrInput[3];
+//        FitnessClass fitClass = new FitnessClass(instructor, className,
+//                location);
+//
+//        Member checkMember = new Member(arrInput[4], arrInput[5],
+//                arrInput[6]);
+//        Member findMember = database.findMember(checkMember);
+//
+//        if(!(findMember instanceof Family)){
+//            System.out.println("Standard membership - guest check-in is " +
+//                    "not allowed.");
+//            return;
+//        }
+//        if(!findMember.getLocation().name().equalsIgnoreCase(location)) {
+//            Location tryCheckIn = Location.getLocation(location);
+//            System.out.println(findMember.getFirstName() + " " +
+//                    findMember.getLastName() + " Guest checking in " +
+//                    tryCheckIn.name() + ", " + tryCheckIn.getZipCode() + ", "
+//                    + tryCheckIn.getCounty() + " - guest location " +
+//                    "restriction.");
+//            return;
+//        }
+//
+//        if(((Family) findMember).getNumberOfPasses() == 0){
+//            System.out.println(findMember.getFirstName() + " " +
+//                    findMember.getLastName() + " ran out of guest pass.");
+//            return;
+//        }
+//        schedule.checkInGuest((Family) findMember, fitClass);
+//    }
 
     /**
      * Checks if the date of birth is a valid date.
@@ -462,7 +462,7 @@ public class GymManager {
                 checkIn(input);
                 break;
             case "CG":
-                checkInGuest(input);
+                //checkInGuest(input);
                 break;
             case "D ":
                 doneWithClass(input);
