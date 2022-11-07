@@ -22,7 +22,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" prefHeight="425.0" prefWidth="427.0" spacing="20.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gymmembershipgui.GymManagerController">
+<VBox alignment="CENTER" prefHeight="425.0" prefWidth="427.0" spacing="20.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gymmembershipgui.GymManagerController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -70,8 +70,8 @@
                                  <RadioButton fx:id="premium" mnemonicParsing="false" text="Premium" toggleGroup="$membershipbutton" />
                               </children>
                            </HBox>
-                           <DatePicker fx:id="myDatePicker" editable="false" prefHeight="26.0" prefWidth="195.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                           <ChoiceBox fx:id="myChoiceBar" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                           <DatePicker fx:id="memberDOBPicker" editable="false" prefHeight="26.0" prefWidth="195.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                           <ChoiceBox fx:id="memberLocationChoiceBar" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         </children>
                      </GridPane>
                   </content>
@@ -115,7 +115,7 @@
                                     </children>
                                  </HBox>
                                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                 <DatePicker fx:id="memberDOB" editable="false" prefHeight="26.0" prefWidth="195.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                 <DatePicker fx:id="classMemberDOBPicker" editable="false" prefHeight="26.0" prefWidth="195.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
                                     <children>
                                        <BorderPane prefHeight="200.0" prefWidth="200.0">
@@ -123,7 +123,7 @@
                                              <Label text="Location" BorderPane.alignment="CENTER" />
                                           </top>
                                           <center>
-                                             <ChoiceBox fx:id="locationChoiceBar" prefHeight="26.0" prefWidth="96.0" BorderPane.alignment="CENTER" />
+                                             <ChoiceBox fx:id="classLocationChoiceBar" prefHeight="26.0" prefWidth="96.0" BorderPane.alignment="CENTER" />
                                           </center>
                                        </BorderPane>
                                     </children>
@@ -195,7 +195,7 @@
    </BorderPane>
    <BorderPane prefHeight="200.0" prefWidth="200.0">
       <center>
-         <TextArea fx:id="memberTextOutput" prefHeight="106.0" prefWidth="387.0" BorderPane.alignment="CENTER" />
+         <TextArea fx:id="output" prefHeight="106.0" prefWidth="387.0" BorderPane.alignment="CENTER" />
       </center>
    </BorderPane>
 </VBox>

@@ -31,7 +31,7 @@ public class ClassSchedule {
         numClasses = INITIAL_SIZE;
     }
 
-    public void loadClassSchedule(String fileName) throws FileNotFoundException {
+    public void loadClassSchedule(String fileName) throws FileNotFoundException{
         File file = new File(fileName);
         Scanner infile = new Scanner(file);
         String input;
