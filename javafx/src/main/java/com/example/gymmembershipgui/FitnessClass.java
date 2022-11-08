@@ -136,6 +136,14 @@ public class FitnessClass {
         return participants.get(memberIndex);
     }
 
+    /**
+     * Finds a guest in the fitness class.
+     * Checks if the guest is already in the fitness class. If guest is in
+     * the class, they are found in the list of guests.
+     * @param guest the guest that needs to be searched for.
+     * @return the member whose membership is being used for the guest pass if
+     * found, null otherwise.
+     */
     public Family findGuest(Family guest) {
         int guestIndex = guests.indexOf(guest);
         if(guestIndex == -1)

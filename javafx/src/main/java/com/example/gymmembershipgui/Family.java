@@ -8,6 +8,7 @@ package com.example.gymmembershipgui;
  */
 public class Family extends Member {
     protected int guestPasses;
+
     protected static final double FAMILY_MONTHLY_FEE = 59.99;
 
     /**
@@ -47,8 +48,6 @@ public class Family extends Member {
      */
     @Override
     public double membershipFee() {
-        if(membershipExpired())
-            return QUARTERLY * FAMILY_MONTHLY_FEE;
         return STANDARD_ONE_TIME_FEE + QUARTERLY * FAMILY_MONTHLY_FEE;
     }
 

@@ -126,9 +126,9 @@ public class Date implements Comparable<Date> {
     }
 
     /**
-     * Given three letter abbreviation for a month return equivalent Months enum.
+     * Given three letter abbreviation for a month, finds equivalent Month.
      * Returns null if an invalid abbreviation is passed.
-     * @param monthAbbreviation the three letter abbreviation.
+     * @param monthAbbreviation the three letter abbreviation of the month.
      * @return prospective Month for given abbreviation of month.
      */
     private Months findMonth(String monthAbbreviation) {
@@ -140,6 +140,10 @@ public class Date implements Comparable<Date> {
         return null;
     }
 
+    /**
+     * Checks if the date is 18 years or older.
+     * @return true if date is at least 18 years ago, false otherwise.
+     */
     public boolean aboveEighteen(){
         Date todayDate = new Date();
         Date eighteenthBirthday = new Date(getMonth() +
@@ -190,9 +194,9 @@ public class Date implements Comparable<Date> {
     }
 
     /**
-     * Checks if two instances of Date() are equal.
-     * Compares the year, month, and date of two Date() instances.
-     * @param obj the Date() instance that will be cast into a Date().
+     * Checks if two instances of Date are equal.
+     * Compares the year, month, and date of two Date instances.
+     * @param obj the Date instance that will be cast into a Date.
      * @return true if date is the same, false otherwise.
      */
     @Override
@@ -207,7 +211,7 @@ public class Date implements Comparable<Date> {
     }
 
     /**
-     * Compares two Date() instances.
+     * Compares two Date instances.
      * Checks to see if compared date is before, after, or same as given date.
      * Years are compared to check if compared year is before/after given
      * year. If same year, the months are compared. If same month, the days
@@ -240,200 +244,5 @@ public class Date implements Comparable<Date> {
     @Override
     public String toString() {
         return month + "/" + day + "/" + year;
-    }
-
-    /**
-     * This is the testbed main to test the isValid() method.
-     * @param args is the array of characters passed to command line.
-     */
-    public static void main(String[] args) {
-        // test case #1
-        Date test = new Date("12/31/1899");
-        System.out.println("Test case #1 result: " + test.isValid());
-
-        // test case #2
-        test = new Date("0/20/2003");
-        System.out.println("Test case #2 result: " + test.isValid());
-
-        // test case #3
-        test = new Date("13/8/1977");
-        System.out.println("Test case #3 result: " + test.isValid());
-
-        // test case #4
-        test = new Date("13/31/2003");
-        System.out.println("Test case #4 result: " + test.isValid());
-
-        // test case #5
-        test = new Date("-1/31/2003");
-        System.out.println("Test case #5 result: " + test.isValid());
-
-        // test case #6
-        test = new Date("3/-20/2003");
-        System.out.println("Test case #6 result: " + test.isValid());
-
-        // test case #7
-        test = new Date("1/31/2020");
-        System.out.println("Test case #7 result: " + test.isValid());
-
-        // test case #8
-        test = new Date("1/32/2020");
-        System.out.println("Test case #8 result: " + test.isValid());
-
-        // test case #9
-        test = new Date("1/20/2004");
-        System.out.println("Test case #9 result: " + test.isValid());
-
-        // test case #10
-        test = new Date("1/20/2003");
-        System.out.println("Test case #10 result: " + test.isValid());
-
-        // test case #11
-        test = new Date("2/28/2021");
-        System.out.println("Test case #11 result: " + test.isValid());
-
-        // test case #12
-        test = new Date("2/29/2003");
-        System.out.println("Test case #12 result: " + test.isValid());
-
-        // test case #13
-        test = new Date("2/30/2011");
-        System.out.println("Test case #13 result: " + test.isValid());
-
-        // test case #14
-        test = new Date("2/29/2000");
-        System.out.println("Test case #14 result: " + test.isValid());
-
-        // test case #15
-        test = new Date("2/30/2020");
-        System.out.println("Test case #15 result: " + test.isValid());
-
-        // test case #16
-        test = new Date("3/30/2021");
-        System.out.println("Test case #16 result: " + test.isValid());
-
-        // test case #17
-        test = new Date("3/30/2023");
-        System.out.println("Test case #17 result: " + test.isValid());
-
-        // test case #18
-        test = new Date("3/31/1990");
-        System.out.println("Test case #18 result: " + test.isValid());
-
-        // test case #19
-        test = new Date("3/31/2023");
-        System.out.println("Test case #19 result: " + test.isValid());
-
-        // test case #20
-        test = new Date("3/32/2003");
-        System.out.println("Test case #20 result: " + test.isValid());
-
-        // test case #21
-        test = new Date("4/3/2003");
-        System.out.println("Test case #21 result: " + test.isValid());
-
-        // test case #22
-        test = new Date("4/31/2003");
-        System.out.println("Test case #22 result: " + test.isValid());
-
-        // test case #23
-        test = new Date("4/31/2022");
-        System.out.println("Test case #23 result: " + test.isValid());
-
-        // test case #24
-        test = new Date("5/1/1996");
-        System.out.println("Test case #24 result: " + test.isValid());
-
-        // test case #25
-        test = new Date("5/1/1999");
-        System.out.println("Test case #25 result: " + test.isValid());
-
-        // test case #26
-        test = new Date("5/31/2023");
-        System.out.println("Test case #26 result: " + test.isValid());
-
-        // test case #27
-        test = new Date("5/32/2020");
-        System.out.println("Test case #27 result: " + test.isValid());
-
-        // test case #28
-        test = new Date("6/30/1999");
-        System.out.println("Test case #28 result: " + test.isValid());
-
-        // test case #29
-        test = new Date("6/30/2023");
-        System.out.println("Test case #29 result: " + test.isValid());
-
-        // test case #30
-        test = new Date("6/31/2020");
-        System.out.println("Test case #30 result: " + test.isValid());
-
-        // test case #31
-        test = new Date("7/15/1977");
-        System.out.println("Test case #31 result: " + test.isValid());
-
-        // test case #32
-        test = new Date("7/32/2020");
-        System.out.println("Test case #32 result: " + test.isValid());
-
-        // test case #33
-        test = new Date("8/8/1977");
-        System.out.println("Test case #33 result: " + test.isValid());
-
-        // test case #34
-        test = new Date("8/32/2020");
-        System.out.println("Test case #34 result: " + test.isValid());
-
-        // test case #35
-        test = new Date("9/2/2022");
-        System.out.println("Test case #35 result: " + test.isValid());
-
-        // test case #36
-        test = new Date("9/9/1977");
-        System.out.println("Test case #36 result: " + test.isValid());
-
-        // test case #37
-        test = new Date("9/30/2023");
-        System.out.println("Test case #37 result: " + test.isValid());
-
-        // test case #38
-        test = new Date("9/31/2020");
-        System.out.println("Test case #38 result: " + test.isValid());
-
-        // test case #39
-        test = new Date("10/7/1991");
-        System.out.println("Test case #39 result: " + test.isValid());
-
-        // test case #40
-        test = new Date("10/32/2020");
-        System.out.println("Test case #40 result: " + test.isValid());
-
-        // test case #41
-        test = new Date("11/20/2003");
-        System.out.println("Test case #41 result: " + test.isValid());
-
-        // test case #42
-        test = new Date("11/31/2020");
-        System.out.println("Test case #42 result: " + test.isValid());
-
-        // test case #43
-        test = new Date("12/1/1989");
-        System.out.println("Test case #43 result: " + test.isValid());
-
-        // test case #44
-        test = new Date("12/2/2022");
-        System.out.println("Test case #44 result: " + test.isValid());
-
-        // test case #45
-        test = new Date("12/20/2004");
-        System.out.println("Test case #45 result: " + test.isValid());
-
-        // test case #46
-        test = new Date("12/31/2023");
-        System.out.println("Test case #46 result: " + test.isValid());
-
-        // test case #47
-        test = new Date("12/32/1989");
-        System.out.println("Test case #47 result: " + test.isValid());
-
     }
 }

@@ -34,7 +34,8 @@ public class MemberDatabase {
         size = INITIAL_SIZE;
     }
 
-    public String loadMemberList(String fileName) throws FileNotFoundException {
+    public String loadMemberList(String fileName) throws
+            FileNotFoundException {
         File file = new File(fileName);
         Scanner infile = new Scanner(file);
         String input;
@@ -126,6 +127,7 @@ public class MemberDatabase {
     /**
      * Displays the list of members in database.
      * Iterates through the list of members and prints each member.
+     * @return a String containing all the members in the database.
      */
     public String print() {
         String output = "";
@@ -140,6 +142,8 @@ public class MemberDatabase {
      * Displays the list of members in database ordered by county and zipcode.
      * Sorts the list by county and zip code using in-place insertion sort.
      * Iterates through the list of members and prints each member.
+     * @return a String containing all the members in the database ordered by
+     * county and zipcode.
      */
     public String printByCounty() {
         String output = "";
@@ -164,6 +168,8 @@ public class MemberDatabase {
      * Displays the list of members in database ordered by expiration date.
      * Sorts the list by membership expiration using in-place insertion sort.
      * Iterates through the list of members and prints each member.
+     * @return a String containing all the members in the database ordered by
+     * expiration date.
      */
     public String printByExpirationDate() {
         String output = "";
@@ -188,6 +194,8 @@ public class MemberDatabase {
      * Displays the list of members in database ordered last and first name.
      * Sorts the list by last and then first name using in-place insertion
      * sort. Iterates through the list of members and prints each member.
+     * @return a String containing all the members in the database ordered by
+     * their last and first names.
      */
     public String printByName() {
         String output = "";
@@ -208,38 +216,28 @@ public class MemberDatabase {
     }
 
     /**
-     * Displays the list of members in database ordered by membership fees.
+     * Displays the list of members in database with their membership fees.
      * Sorts the list by membership fees using in-place insertion sort.
      * Iterates through the list of members and prints each member.
+     * @return a String containing all the members in the database along with
+     * their membership fees.
      */
     public String printByMembershipFee(){
         String output = "";
         for(int i = 1; i < size; ++i){
             Member keyMember = mlist[i];
             int j = i - 1;
-            // Move each member alphabetically ahead of the key member up
-            while(j >= 0 && mlist[j].membershipFee() > keyMember.membershipFee())
+            while(j >= 0 && mlist[j].compareTo(keyMember) > 0)
                 mlist[j+1] = mlist[j--];
             mlist[j + 1] = keyMember;
         }
         output += "\n-list of members with membership fees-\n";
         for(int i = 0; i < size; i++){
-            String membershipInfo;
-            if(mlist[i] instanceof Premium){
-                membershipInfo = "Membership fee: $" +
-                        ((Premium) mlist[i]).membershipFee();
-            }
-            else if(mlist[i] instanceof Family){
-                membershipInfo = "Membership fee: $" +
-                        ((Family) mlist[i]).membershipFee();
-            }
-            else{
-                membershipInfo = "Membership fee: $" +
+            String membershipInfo = "Membership fee: $" +
                         mlist[i].membershipFee();
-            }
             output += mlist[i].toString() + ", " + membershipInfo + "\n";
         }
-        output += "-end of list-\n";
+        output += "-end of list-\n\n";
         return output;
     }
 

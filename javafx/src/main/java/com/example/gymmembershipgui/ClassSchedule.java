@@ -31,8 +31,13 @@ public class ClassSchedule {
         numClasses = INITIAL_SIZE;
     }
 
+    /**
+     * Adds all the classes on class schedule list to the schedule.
+     * @param fileName the name of the file containing all the classes to add.
+     * @throws FileNotFoundException if the file is not found.
+     */
     public void loadClassSchedule(String fileName) throws
-            FileNotFoundException{
+            FileNotFoundException {
         File file = new File(fileName);
         Scanner infile = new Scanner(file);
         String input;
@@ -104,167 +109,13 @@ public class ClassSchedule {
     }
 
     /**
-     * Checks if a class exists on the fitness class schedule.
-     * Iterates through the classes array. Checks if any of the scheduled
-     * fitness classes match the given fitness class.
-     * @param className the name of the FitnessClass to be found.
-     * @return true if class is found, false otherwise.
-     */
-//    public boolean findFitnessClass(String className){
-//        for (int i = 0; i < numClasses; i++) {
-//            if (classes[i].getClassName().equalsIgnoreCase(className))
-//                return true;
-//        }
-//        return false;
-//    }
-
-    /**
-     * Checks a member in to a fitness class on the schedule.
-     * If the fitness class exists and there are no time conflicts with other
-     * fitness classes, the member is added to the list of participants in the
-     * fitness class.
-     * @param fClass the name of the fitness class.
-     * @param location the location of the fitness class.
-     * @param instructor the instructor of the fitness class.
-     * @param addMember the member to be checked into the fitness class.
-     * @return true if the member is checked in, false otherwise.
-     */
-//    public String checkInMember(String fClass, String location,
-//                                 String instructor, Member addMember){
-//        return checkFitnessClass(fClass, location, instructor, addMember);
-//    }
-
-    /**
-     * Checks if a class with the inputted parameters exists.
-     * Creates a FitnessClass object using the fClass, location, instructor.
-     * Using this object, searches schedule for the equivalent FitnessClass.
-     * If a class is not found, that means no class with the given combination
-     * of name, teacher, and location exist. Also checks if the member is
-     * already present in the class they want to attend. Once the class is
-     * found and the member is not already checked into it, a check for time
-     * conflicts with other classes occurs.
-     * @param fClass the name of the class a user wants to attend as a String.
-     * @param location the location of the class as a String.
-     * @param instructor the instructor of the class as a String.
-     * @param addMember the member to be added to a class as a Member object.
-     */
-//    private boolean checkFitnessClass(String fClass, String location,
-//                                   String instructor, Member addMember) {
-//        FitnessClass findClass = new FitnessClass(fClass, instructor,
-//                "", location);
-//        FitnessClass foundClass = findFitnessClass(findClass);
-//
-//        if(foundClass == null) {
-//            System.out.println(fClass + " by " + instructor + " does not " +
-//                    "exist at " + location);
-//            return false;
-//        }
-//
-//        Member inClassAlready = foundClass.findMember(addMember);
-//        if(inClassAlready != null) {
-//            System.out.println(addMember.getFirstName() + " " +
-//                    addMember.getLastName() + " already checked in.");
-//            return false;
-//        }
-//        return checkTimeConflict(foundClass, addMember);
-//    }
-//    private String checkFitnessClass(String fClass, String location,
-//                                      String instructor, Member addMember) {
-//        FitnessClass findClass = new FitnessClass(fClass, instructor,
-//                "", location);
-//        FitnessClass foundClass = findFitnessClass(findClass);
-//
-//        String returnVal;
-//
-//        if(foundClass == null) {
-//            returnVal = (fClass + " by " + instructor + " does not " +
-//                    "exist at " + location);
-//            return returnVal;
-//        }
-//
-//        Member inClassAlready = foundClass.findMember(addMember);
-//        if(inClassAlready != null) {
-//            returnVal = (addMember.getFirstName() + " " +
-//                    addMember.getLastName() + " already checked in.");
-//            return returnVal;
-//        }
-//        return checkTimeConflict(foundClass, addMember);
-//    }
-
-    /**
-     * Checks if a time conflict exists between a member and a class.
-     * Then, the time of the fitness class is found and a time conflict is
-     * searched for. If a conflict is not found, the member is checked into
-     * the class.
-     * @param course the FitnessClass a member wants to attend.
-     * @param member the member that wants to be added to a class.
-     */
-//    private boolean checkTimeConflict(FitnessClass course, Member member) {
-//        String timeOfCourse = course.getTime();
-//        FitnessClass isConflict = findTimeConflict(timeOfCourse,
-//                member);
-//        if(isConflict != null) {
-//            System.out.println("Time conflict - " + course.getClassName() +
-//                    " - " + course.getInstructorName() + ", " +
-//                    course.getTime() + ", " +
-//                    Location.getLocation(course.getLocation()));
-//            return false;
-//        }
-//        course.checkInMember(member);
-//        System.out.print(member.getFirstName() + " " + member.getLastName() +
-//                " checked in ");
-//        System.out.println(course + "\n");
-//        return true;
-//    }
-
-//    private String checkTimeConflict(FitnessClass course, Member member) {
-//        String timeOfCourse = course.getTime();
-//        FitnessClass isConflict = findTimeConflict(timeOfCourse,
-//                member);
-//        String returnVal;
-//        if(isConflict != null) {
-//            returnVal = "Time conflict - " + course.getClassName() +
-//                    " - " + course.getInstructorName() + ", " +
-//                    course.getTime() + ", " +
-//                    Location.getLocation(course.getLocation());
-//            return returnVal;
-//        }
-//        course.checkInMember(member);
-//        returnVal = member.getFirstName() + " " + member.getLastName() +
-//                " checked in " + course + "\n";
-//        return returnVal;
-//    }
-
-
-    /**
-     * Checks a guest into a fitness class.
-     * Prints the class the guest is checked into.
-     * @param guest the member who must have a Family or Premium membership
-     *              and whose guest must be checked into a fitness class
-     * @param fitClass the class the guest wants to check into.
-     * @return true when the guest is checked in.
-     */
-//    public String checkInGuest(Family guest, FitnessClass fitClass){
-//        FitnessClass fitnessClass = findFitnessClass(fitClass);
-//        fitnessClass.checkInGuest(guest);
-//        String output;
-//        output = (guest.getFirstName() + " " +
-//                guest.getLastName() + " (guest) checked in " +
-//                fitnessClass.getClassName() + " - " +
-//                fitnessClass.getInstructorName() + ", " +
-//                fitnessClass.getTime() + ", " + fitnessClass.getLocation());
-//        output += (fitnessClass.getClassParticipantsAndGuests());
-//        return output;
-//    }
-
-
-    /**
-     * Searches for a possible conflicting fitness class.
+     * Searches for possible conflicting fitness classes.
      * Iterates through classes array. If a fitness class is at the same time
-     * as the time given and the member is in the class, there is a time
-     * conflict.
-     * @param fitnessClass ----
-     * @return FitnessClass if time conflict exists, null otherwise.
+     * as the fitness class given, the class is added to the array containing
+     * all conflicting fitness classes.
+     * @param fitnessClass the fitness class that must be compared with other
+     *                     classes.
+     * @return FitnessClass[] containing any conflicting classes.
      */
     public FitnessClass[] findTimeConflict(FitnessClass fitnessClass) {
         FitnessClass[] conflictingClasses = new FitnessClass[numClasses-1];
@@ -286,6 +137,10 @@ public class ClassSchedule {
         return numClasses;
     }
 
+    /**
+     * Checks if the schedule is empty.
+     * @return true if there are no classes on the schedule, false otherwise.
+     */
     public boolean isEmpty(){
         return numClasses == 0;
     }

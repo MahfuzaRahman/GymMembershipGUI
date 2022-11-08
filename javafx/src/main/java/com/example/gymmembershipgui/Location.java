@@ -57,6 +57,10 @@ public enum Location {
         return null;
     }
 
+    /**
+     * Creates a String containing the location information.
+     * @return a String with the location name, zip code, and county.
+     */
     @Override
     public String toString(){
         return name() + ", " + getZipCode() + ", " + getCounty();

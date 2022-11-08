@@ -47,8 +47,6 @@ public class Premium extends Family{
      */
     @Override
     public double membershipFee() {
-        if(membershipExpired())
-            return ANNUALLY * FAMILY_MONTHLY_FEE;
         return (ANNUALLY - FIRST_MONTH_FREE) * FAMILY_MONTHLY_FEE;
     }
 

@@ -29,8 +29,10 @@ public class Member implements Comparable<Member> {
      * @param location the member's gym location.
      */
     public Member(String fname, String lname, String dob, String location) {
-        this.fname = fname.substring(0,1).toUpperCase()+ fname.substring(1).toLowerCase();
-        this.lname = lname.substring(0,1).toUpperCase() + lname.substring(1).toLowerCase();
+        this.fname = fname.substring(0,1).toUpperCase() +
+                fname.substring(1).toLowerCase();
+        this.lname = lname.substring(0,1).toUpperCase() +
+                lname.substring(1).toLowerCase();
         this.dob = new Date(dob);
         this.expire = setExpire();
         this.location = Location.getLocation(location);
@@ -46,8 +48,10 @@ public class Member implements Comparable<Member> {
      */
     public Member(String fname, String lname, String dob,
                   String expire, String location) {
-        this.fname = fname.substring(0,1).toUpperCase()+ fname.substring(1).toLowerCase();
-        this.lname = lname.substring(0,1).toUpperCase() + lname.substring(1).toLowerCase();
+        this.fname = fname.substring(0,1).toUpperCase() +
+                fname.substring(1).toLowerCase();
+        this.lname = lname.substring(0,1).toUpperCase() +
+                lname.substring(1).toLowerCase();
         this.dob = new Date(dob);
         this.expire = new Date(expire);
         this.location = Location.getLocation(location);
@@ -60,8 +64,10 @@ public class Member implements Comparable<Member> {
      * @param dob the member's date of birth in mm/dd/yyyy format.
      */
     public Member(String fname, String lname, String dob) {
-        this.fname = fname.substring(0,1).toUpperCase()+ fname.substring(1).toLowerCase();
-        this.lname = lname.substring(0,1).toUpperCase() + lname.substring(1).toLowerCase();
+        this.fname = fname.substring(0,1).toUpperCase() +
+                fname.substring(1).toLowerCase();
+        this.lname = lname.substring(0,1).toUpperCase() +
+                lname.substring(1).toLowerCase();
         this.dob = new Date(dob);
         this.expire = null;
         this.location = null;
@@ -157,8 +163,6 @@ public class Member implements Comparable<Member> {
      * @return the standard membership fee for the first quarter.
      */
     public double membershipFee(){
-        if(membershipExpired())
-            return QUARTERLY * STANDARD_MONTHLY_FEE;
         return STANDARD_ONE_TIME_FEE + QUARTERLY * STANDARD_MONTHLY_FEE;
     }
 
@@ -234,56 +238,5 @@ public class Member implements Comparable<Member> {
                 ", Membership expires " + expire.toString() + ", Location: "
                 + location.name() + ", " +  location.getZipCode() + ", "
                 + location.getCounty());
-    }
-
-    /**
-     * This is the testbed main to test the compareTo() method.
-     * @param args is the array of characters passed to command line.
-     */
-    public static void main(String[] args) {
-        // test case #1
-        Member m1 = new Member("John", "Doe", "1/20/2003");
-        Member m2 = new Member( "john", "doe", "1/20/2003");
-        System.out.println("Test case #1 result: " + m1.compareTo(m2));
-
-        // test case #2
-        m1 = new Member("April", "March", "3/31/1990");
-        m2 = new Member("Roy", "Brooks", "9/9/1977");
-        System.out.println("Test case #2 result: " + m1.compareTo(m2));
-
-        // test case #3
-        m1 = new Member("Carl", "Brown", "10/7/1991");
-        m2 = new Member("Kate", "Lindsey", "7/15/1977");
-        System.out.println("Test case #3 result: " + m1.compareTo(m2));
-
-        // test case #4
-        m1 = new Member("Bill", "Scanlan", "5/1/1999");
-        m2 = new Member("Paul", "Siegel", "6/30/1999");
-        System.out.println("Test case #4 result: " + m1.compareTo(m2));
-
-        // test case #5
-        m1 = new Member("Jane", "Doe", "5/1/1996");
-        m2 = new Member("John", "Doe", "1/20/2003");
-        System.out.println("Test case #5 result: " + m1.compareTo(m2));
-
-        // test case #6
-        m1 = new Member("Mary", "Lindsey", "12/1/1989");
-        m2 = new Member("Kate", "Lindsey", "7/15/1977");
-        System.out.println("Test case #6 result: " + m1.compareTo(m2));
-
-        // test case #7
-        m1 = new Member("Roy", "Brooks", "8/8/1977");
-        m2 = new Member("Roy", "Brooks", "9/9/1977");
-        System.out.println("Test case #7 result: " + m1.compareTo(m2));
-
-        // test case #8
-        m1 = new Member("John", "Doe", "1/20/2004");
-        m2 = new Member("John", "Doe", "1/20/2003");
-        System.out.println("Test case #8 result: " + m1.compareTo(m2));
-
-        // test case #9
-        m1 = new Member("Duke", "Ellington", "2/29/2000");
-        m2 = new Member("Duke", "Ellington", "2/29/2000");
-        System.out.println("Test case #9 result: " + m1.compareTo(m2));
     }
 }
