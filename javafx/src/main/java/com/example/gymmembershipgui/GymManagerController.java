@@ -210,8 +210,9 @@ public class GymManagerController implements Initializable {
             clearAllFieldsFitness();
             return;
         }
+
+        Location checkInLoc = Location.getLocation(location);
         if(!findMember.getLocation().name().equalsIgnoreCase(location)) {
-            Location checkInLoc = Location.getLocation(location);
             output.appendText(name + " Guest checking in " + checkInLoc +
                     " - guest location restriction.\n");
             clearAllFieldsFitness();
@@ -225,6 +226,7 @@ public class GymManagerController implements Initializable {
     private void checkInMember(ActionEvent event) {
         String firstName = memberFirstName.getText();
         String lastName = memberLastName.getText();
+        String name = firstName + " " + lastName;
         String instructor = instructorChoiceBar.getValue();
         String fitness = fitnessChoiceBar.getValue();
         String location = classLocationChoiceBar.getValue();
@@ -241,17 +243,32 @@ public class GymManagerController implements Initializable {
             return;
         if(!isMemberValid(findMember, checkMember))
             return;
-        if(!findMember.getLocation().name().equalsIgnoreCase(location) &&
-                !(findMember instanceof Family)) {
-            Location checkInLoc = Location.getLocation(location);
-            output.appendText(findMember.getFirstName() + " " +
-                    findMember.getLastName() + " checking in " + checkInLoc +
+
+        Location checkInLoc = Location.getLocation(location);
+        if((!(findMember instanceof Family)) && findMember.getLocation() !=
+                checkInLoc){
+            output.appendText(name + " checking in " + checkInLoc +
                     " - standard membership location restriction.\n");
-            clearAllFieldsFitness();
-            return;
         }
-        output.appendText(schedule.findFitnessClass(fitnessClass).checkInMember(findMember));
+
+        findTimeConflicts(fitnessClass, findMember);
         clearAllFieldsFitness();
+    }
+
+    private void findTimeConflicts(FitnessClass fitnessClass, Member member){
+        String time = fitnessClass.getTime();
+        String fitness = fitnessClass.getClassName();
+        String instructor = fitnessClass.getInstructorName();
+        Location location = Location.getLocation(fitnessClass.getLocation());
+        String name = member.getFirstName() + " " + member.getLastName();
+        FitnessClass[] conflictingClasses = schedule.findTimeConflict(fitnessClass);
+        for(FitnessClass fc: conflictingClasses){
+            if(fc != null && fc.findMember(member) != null){
+                output.appendText("Time conflict - " + fitness +
+                        " - " + instructor + ", " + time + ", " + location);
+            }
+        }
+        output.appendText(fitnessClass.checkInMember(member));
     }
 
     private void checkOutGuest(ActionEvent event) {

@@ -129,10 +129,10 @@ public class ClassSchedule {
      * @param addMember the member to be checked into the fitness class.
      * @return true if the member is checked in, false otherwise.
      */
-    public String checkInMember(String fClass, String location,
-                                 String instructor, Member addMember){
-        return checkFitnessClass(fClass, location, instructor, addMember);
-    }
+//    public String checkInMember(String fClass, String location,
+//                                 String instructor, Member addMember){
+//        return checkFitnessClass(fClass, location, instructor, addMember);
+//    }
 
     /**
      * Checks if a class with the inputted parameters exists.
@@ -217,23 +217,23 @@ public class ClassSchedule {
 //        return true;
 //    }
 
-    private String checkTimeConflict(FitnessClass course, Member member) {
-        String timeOfCourse = course.getTime();
-        FitnessClass isConflict = findTimeConflict(timeOfCourse,
-                member);
-        String returnVal;
-        if(isConflict != null) {
-            returnVal = "Time conflict - " + course.getClassName() +
-                    " - " + course.getInstructorName() + ", " +
-                    course.getTime() + ", " +
-                    Location.getLocation(course.getLocation());
-            return returnVal;
-        }
-        course.checkInMember(member);
-        returnVal = member.getFirstName() + " " + member.getLastName() +
-                " checked in " + course + "\n";
-        return returnVal;
-    }
+//    private String checkTimeConflict(FitnessClass course, Member member) {
+//        String timeOfCourse = course.getTime();
+//        FitnessClass isConflict = findTimeConflict(timeOfCourse,
+//                member);
+//        String returnVal;
+//        if(isConflict != null) {
+//            returnVal = "Time conflict - " + course.getClassName() +
+//                    " - " + course.getInstructorName() + ", " +
+//                    course.getTime() + ", " +
+//                    Location.getLocation(course.getLocation());
+//            return returnVal;
+//        }
+//        course.checkInMember(member);
+//        returnVal = member.getFirstName() + " " + member.getLastName() +
+//                " checked in " + course + "\n";
+//        return returnVal;
+//    }
 
 
     /**
@@ -263,19 +263,19 @@ public class ClassSchedule {
      * Iterates through classes array. If a fitness class is at the same time
      * as the time given and the member is in the class, there is a time
      * conflict.
-     * @param time the time of the class as a String object.
-     * @param member the member to find a conflict for.
+     * @param fitnessClass ----
      * @return FitnessClass if time conflict exists, null otherwise.
      */
-    private FitnessClass[] findTimeConflict(String time) {
-        FitnessClass[] conflictingClasses = new FitnessClass[numClasses];
-
+    public FitnessClass[] findTimeConflict(FitnessClass fitnessClass) {
+        FitnessClass[] conflictingClasses = new FitnessClass[numClasses-1];
+        String classTime = fitnessClass.getTime();
+        int index = 0;
         for(FitnessClass fc : classes) {
-            if(fc != null && fc.getTime().equalsIgnoreCase(time)) {
-                conflictingClasses;
-            }
+            if(fc != null && !fc.equals(fitnessClass) &&
+                    fc.getTime().equalsIgnoreCase(classTime))
+                conflictingClasses[index++] = fc;
         }
-        return null;
+        return conflictingClasses;
     }
 
     /**

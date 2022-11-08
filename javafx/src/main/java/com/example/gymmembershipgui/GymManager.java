@@ -125,8 +125,8 @@ public class GymManager {
                     "location restriction.");
             return;
         }
-        schedule.checkInMember
-                (fitnessClass, location, instructor, findMember);
+//        schedule.checkInMember
+//                (fitnessClass, location, instructor, findMember);
     }
 
     /**

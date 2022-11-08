@@ -96,12 +96,8 @@ public class FitnessClass {
         String name = firstName + " " + lastName;
         if(findMember(member) != null)
             return name + " already checked in.\n";
-        if((!(member instanceof Family)) && member.getLocation() !=
-                Location.getLocation(getLocation())){
-            return name + " checking in " + getLocation() + " - standard " +
-                    "membership location restriction.\n"
-        }
         participants.add(member);
+        return name + " checked in " + this + "\n";
     }
 
     /**
