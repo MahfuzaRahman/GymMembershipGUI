@@ -97,8 +97,8 @@ public class ClassSchedule {
      */
     public FitnessClass findFitnessClass(FitnessClass fitnessClass){
         for (int i = 0; i < classes.length; i++) {
-            if (classes[i] != null && classes[i].equals(fitnessClass)){
-                return classes[i];}
+            if (classes[i] != null && classes[i].equals(fitnessClass))
+                return classes[i];
         }
         return null;
     }
@@ -301,7 +301,7 @@ public class ClassSchedule {
             if(fc != null)
                 schedule += fc + "\n";
         }
-        schedule += "-end of class list.\n";
+        schedule += "-end of class list.\n\n";
         return schedule;
     }
 }

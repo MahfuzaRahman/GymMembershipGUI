@@ -249,23 +249,23 @@ public class GymManagerController implements Initializable {
                 checkInLoc){
             output.appendText(name + " checking in " + checkInLoc +
                     " - standard membership location restriction.\n");
-        }
-
-        findTimeConflicts(fitnessClass, findMember);
+        } else
+            findTimeConflicts(fitnessClass, findMember);
         clearAllFieldsFitness();
     }
 
     private void findTimeConflicts(FitnessClass fitnessClass, Member member){
+        fitnessClass = schedule.findFitnessClass(fitnessClass);
         String time = fitnessClass.getTime();
         String fitness = fitnessClass.getClassName();
         String instructor = fitnessClass.getInstructorName();
         Location location = Location.getLocation(fitnessClass.getLocation());
-        String name = member.getFirstName() + " " + member.getLastName();
         FitnessClass[] conflictingClasses = schedule.findTimeConflict(fitnessClass);
         for(FitnessClass fc: conflictingClasses){
             if(fc != null && fc.findMember(member) != null){
-                output.appendText("Time conflict - " + fitness +
-                        " - " + instructor + ", " + time + ", " + location);
+                output.appendText("Time conflict - " + fitness + " - " +
+                        instructor + ", " + time + ", " + location + "\n");
+                return;
             }
         }
         output.appendText(fitnessClass.checkInMember(member));
@@ -436,7 +436,7 @@ public class GymManagerController implements Initializable {
                 location);
         if(schedule.findFitnessClass(fitnessClass) == null){
             output.appendText(className + " by " + instructor + " does not"
-                    + " exist at " + location);
+                    + " exist at " + location + "\n");
             clearAllFieldsFitness();
             return false;
         }
