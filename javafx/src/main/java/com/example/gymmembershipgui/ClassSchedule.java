@@ -31,17 +31,24 @@ public class ClassSchedule {
         numClasses = INITIAL_SIZE;
     }
 
-    public void loadClassSchedule(String fileName) throws FileNotFoundException{
+    public void loadClassSchedule(String fileName) throws
+            FileNotFoundException{
         File file = new File(fileName);
         Scanner infile = new Scanner(file);
         String input;
+        int classIndex = 0;
+        int instructorIndex = 1;
+        int timeIndex = 2;
+        int locationIndex = 3;
 
         while(infile.hasNextLine()) {
             input = infile.nextLine();
             if(!input.equals("")) {
                 String[] arrInput = input.split(" ", 0);
-                addFitnessClass(arrInput[0], arrInput[1], arrInput[2],
-                        arrInput[3]);
+                FitnessClass fitnessClass = new FitnessClass(
+                        arrInput[classIndex], arrInput[instructorIndex],
+                        arrInput[timeIndex], arrInput[locationIndex]);
+                addFitnessClass(fitnessClass);
             }
         }
     }
@@ -52,16 +59,10 @@ public class ClassSchedule {
      * location. If the classes array is filled to capacity, the array is
      * grown. Then, if the created fitness class is already in the schedule,
      * it is not added. Otherwise, the class is added to the schedule.
-     * @param className the name of the fitness class being added.
-     * @param instructor the name of the instructor.
-     * @param time the time the class takes place.
-     * @param location the location of the class.
+     * @param fitnessClass
      * @return true if the class is added, false if already present.
      */
-    public boolean addFitnessClass(String className, String instructor,
-                                String time, String location){
-        FitnessClass fitnessClass = new FitnessClass(className,
-                instructor, time, location);
+    private boolean addFitnessClass(FitnessClass fitnessClass){
         if (numClasses == classes.length)
             growSchedule();
         if(findFitnessClass(fitnessClass) != null)
@@ -109,13 +110,13 @@ public class ClassSchedule {
      * @param className the name of the FitnessClass to be found.
      * @return true if class is found, false otherwise.
      */
-    public boolean findFitnessClass(String className){
-        for (int i = 0; i < numClasses; i++) {
-            if (classes[i].getClassName().equalsIgnoreCase(className))
-                return true;
-        }
-        return false;
-    }
+//    public boolean findFitnessClass(String className){
+//        for (int i = 0; i < numClasses; i++) {
+//            if (classes[i].getClassName().equalsIgnoreCase(className))
+//                return true;
+//        }
+//        return false;
+//    }
 
     /**
      * Checks a member in to a fitness class on the schedule.
@@ -167,28 +168,28 @@ public class ClassSchedule {
 //        }
 //        return checkTimeConflict(foundClass, addMember);
 //    }
-    private String checkFitnessClass(String fClass, String location,
-                                      String instructor, Member addMember) {
-        FitnessClass findClass = new FitnessClass(fClass, instructor,
-                "", location);
-        FitnessClass foundClass = findFitnessClass(findClass);
-
-        String returnVal;
-
-        if(foundClass == null) {
-            returnVal = (fClass + " by " + instructor + " does not " +
-                    "exist at " + location);
-            return returnVal;
-        }
-
-        Member inClassAlready = foundClass.findMember(addMember);
-        if(inClassAlready != null) {
-            returnVal = (addMember.getFirstName() + " " +
-                    addMember.getLastName() + " already checked in.");
-            return returnVal;
-        }
-        return checkTimeConflict(foundClass, addMember);
-    }
+//    private String checkFitnessClass(String fClass, String location,
+//                                      String instructor, Member addMember) {
+//        FitnessClass findClass = new FitnessClass(fClass, instructor,
+//                "", location);
+//        FitnessClass foundClass = findFitnessClass(findClass);
+//
+//        String returnVal;
+//
+//        if(foundClass == null) {
+//            returnVal = (fClass + " by " + instructor + " does not " +
+//                    "exist at " + location);
+//            return returnVal;
+//        }
+//
+//        Member inClassAlready = foundClass.findMember(addMember);
+//        if(inClassAlready != null) {
+//            returnVal = (addMember.getFirstName() + " " +
+//                    addMember.getLastName() + " already checked in.");
+//            return returnVal;
+//        }
+//        return checkTimeConflict(foundClass, addMember);
+//    }
 
     /**
      * Checks if a time conflict exists between a member and a class.
@@ -266,13 +267,12 @@ public class ClassSchedule {
      * @param member the member to find a conflict for.
      * @return FitnessClass if time conflict exists, null otherwise.
      */
-    public FitnessClass findTimeConflict(String time, Member member) {
+    private FitnessClass[] findTimeConflict(String time) {
+        FitnessClass[] conflictingClasses = new FitnessClass[numClasses];
+
         for(FitnessClass fc : classes) {
             if(fc != null && fc.getTime().equalsIgnoreCase(time)) {
-                Member memberInClass = fc.findMember(member);
-                if(memberInClass != null) {
-                    return fc;
-                }
+                conflictingClasses;
             }
         }
         return null;

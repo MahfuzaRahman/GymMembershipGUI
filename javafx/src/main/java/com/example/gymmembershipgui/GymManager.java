@@ -211,10 +211,10 @@ public class GymManager {
      */
     private boolean isClassValid(String fitnessClass, String instructor,
                                  String location){
-        if(!schedule.findFitnessClass(fitnessClass)) {
-            System.out.println(fitnessClass + " - class does not exist.");
-            return false;
-        }
+//        if(!schedule.findFitnessClass(fitnessClass)) {
+//            System.out.println(fitnessClass + " - class does not exist.");
+//            return false;
+//        }
         if(!Instructors.isInstructor(instructor)) {
             System.out.println(instructor + " - instructor does not exist.");
             return false;
@@ -371,20 +371,20 @@ public class GymManager {
      * FitnessClass to schedule. If not, an exception is thrown.
      * @throws FileNotFoundException to inputCommand method.
      */
-    public void loadSchedule() throws FileNotFoundException {
-        File file = new File("src/classSchedule.txt");
-        Scanner infile = new Scanner(file);
-        String input;
-
-        while(infile.hasNextLine()) {
-            input = infile.nextLine();
-            String[] arrInput = input.split(" ", 0);
-            schedule.addFitnessClass(arrInput[0], arrInput[1], arrInput[2],
-                    arrInput[3]);
-        }
-        System.out.println("\n-Fitness classes loaded-");
-        schedule();
-    }
+//    public void loadSchedule() throws FileNotFoundException {
+//        File file = new File("src/classSchedule.txt");
+//        Scanner infile = new Scanner(file);
+//        String input;
+//
+//        while(infile.hasNextLine()) {
+//            input = infile.nextLine();
+//            String[] arrInput = input.split(" ", 0);
+//            schedule.addFitnessClass(arrInput[0], arrInput[1], arrInput[2],
+//                    arrInput[3]);
+//        }
+//        System.out.println("\n-Fitness classes loaded-");
+//        schedule();
+//    }
 
     /**
      * Loads the memberList.txt file into the database.
@@ -473,12 +473,12 @@ public class GymManager {
             case "Q":
                 break;
             case "LS":
-                try {
-                    loadSchedule();
-                }
-                catch(FileNotFoundException e) {
-                    System.out.println("Schedule file not found");
-                }
+//                try {
+//                   // loadSchedule();
+//                }
+//                catch(FileNotFoundException e) {
+//                    System.out.println("Schedule file not found");
+//                }
                 break;
             case "LM":
                 try {

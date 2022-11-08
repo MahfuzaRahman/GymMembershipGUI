@@ -90,19 +90,18 @@ public class FitnessClass {
      * @param member the member that needs to be checked in.
      * @return true if member is added, false if member is already checked in.
     */
-    public boolean checkInMember(Member member){
-        if(participants.contains(member))
-            return false;
+    public String checkInMember(Member member){
+        String firstName = member.getFirstName();
+        String lastName = member.getLastName();
+        String name = firstName + " " + lastName;
+        if(findMember(member) != null)
+            return name + " already checked in.\n";
         if((!(member instanceof Family)) && member.getLocation() !=
-                Location.getLocation(getLocation()))
-            return false;
-        if(!member.aboveEighteen())
-            return false;
-        if(!member.getDOB().isValid())
-            return false;
-        if(member.membershipExpired())
-            return false;
-        return participants.add(member);
+                Location.getLocation(getLocation())){
+            return name + " checking in " + getLocation() + " - standard " +
+                    "membership location restriction.\n"
+        }
+        participants.add(member);
     }
 
     /**
@@ -110,7 +109,7 @@ public class FitnessClass {
      * Uses the guest pass for the family membership passed as a parameter.
      * Then, adds the guest to the list of guests in the class.
      * @param guest the guest that is being added to the fitness class.
-     * @return true once the member is added to guests arrayList.
+     * @return ---
      */
     public String checkInGuest(Family guest){
         String firstName = guest.getFirstName();

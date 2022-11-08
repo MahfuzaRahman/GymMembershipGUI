@@ -192,7 +192,7 @@ public class GymManagerController implements Initializable {
         String fitness = fitnessChoiceBar.getValue();
         String location = classLocationChoiceBar.getValue();
 
-        if(!checkCredsFitness(firstName, lastName))
+        if(!checkCredentialsClass(firstName, lastName))
             return;
 
         Date DOB = new Date(classMemberDOBPicker.getValue().toString());
@@ -229,10 +229,11 @@ public class GymManagerController implements Initializable {
         String fitness = fitnessChoiceBar.getValue();
         String location = classLocationChoiceBar.getValue();
 
-        if(!checkCredsFitness(firstName, lastName))
+        if(!checkCredentialsClass(firstName, lastName))
             return;
 
         Date DOB = new Date(classMemberDOBPicker.getValue().toString());
+        FitnessClass fitnessClass = new FitnessClass(instructor, fitness, location);
         Member checkMember = new Member(firstName, lastName, DOB.toString());
         Member findMember = database.findMember(checkMember);
 
@@ -249,8 +250,7 @@ public class GymManagerController implements Initializable {
             clearAllFieldsFitness();
             return;
         }
-        output.appendText(schedule.checkInMember
-                (fitness, location, instructor, findMember) + "\n");
+        output.appendText(schedule.findFitnessClass(fitnessClass).checkInMember(findMember));
         clearAllFieldsFitness();
     }
 
@@ -262,7 +262,7 @@ public class GymManagerController implements Initializable {
         String fitness = fitnessChoiceBar.getValue();
         String location = classLocationChoiceBar.getValue();
 
-        if(!checkCredsFitness(firstName, lastName))
+        if(!checkCredentialsClass(firstName, lastName))
             return;
 
         Date DOB = new Date(classMemberDOBPicker.getValue().toString());
@@ -273,15 +273,14 @@ public class GymManagerController implements Initializable {
             return;
         if(!isMemberValid(findMember, checkMember))
             return;
-
-        FitnessClass fitnessClass = schedule.findFitnessClass
-                (new FitnessClass(instructor, fitness, location));
-        if(fitnessClass == null) {
-            output.appendText(fitness + " by " + instructor + " does not " +
-                    "exist at " + location + ".\n");
+        if(!(findMember instanceof Family)){
+            output.appendText("Standard membership - guest check-in is " +
+                    "not allowed.\n");
             clearAllFieldsFitness();
             return;
         }
+        FitnessClass fitnessClass = schedule.findFitnessClass
+                (new FitnessClass(instructor, fitness, location));
         if(fitnessClass.findGuest((Family)findMember) == null) {
             output.appendText(findMember.getFirstName() + " " +
                     findMember.getLastName() + " did not check in.\n");
@@ -301,12 +300,11 @@ public class GymManagerController implements Initializable {
         String fitness = fitnessChoiceBar.getValue();
         String location = classLocationChoiceBar.getValue();
 
-        if(!checkCredsFitness(firstName, lastName))
+        if(!checkCredentialsClass(firstName, lastName))
             return;
 
         Date DOB = new Date(classMemberDOBPicker.getValue().toString());
-        Member checkMember = new Member(memberFirstName.getText(), memberLastName.getText(),
-                DOB.toString());
+        Member checkMember = new Member(firstName, lastName, DOB.toString());
         Member findMember = database.findMember(checkMember);
 
         if(!isClassValid(fitness, instructor, location))
@@ -316,13 +314,6 @@ public class GymManagerController implements Initializable {
 
         FitnessClass fitnessClass = schedule.findFitnessClass
                 (new FitnessClass(instructor, fitness, location));
-        if(fitnessClass == null) {
-            output.appendText(fitness + " by " + instructor + " does not " +
-                    "exist at " + location + ".\n");
-            clearAllFieldsFitness();
-            return;
-        }
-        // wait here
         if(fitnessClass.findMember(findMember) == null) {
             output.appendText(findMember.getFirstName() + " " +
                     findMember.getLastName() + " did not check in.\n");
@@ -342,7 +333,7 @@ public class GymManagerController implements Initializable {
         return false;
     }
 
-    private boolean checkCredsFitness(String firstName, String lastName) {
+    private boolean checkCredentialsClass(String firstName, String lastName) {
         if(checkEmptyMemberFitness(firstName, lastName)){
             output.appendText("Enter member information.\n");
             return false;
@@ -353,7 +344,8 @@ public class GymManagerController implements Initializable {
             return false;
         }
         if(!isAlpha(firstName) || !isAlpha(lastName)){
-            output.appendText("Names should not include special characters.\n");
+            output.appendText("Names should not include " +
+                    "special characters, spaces, or numbers.\n");
             clearAllFieldsFitness();
             return false;
         }
@@ -364,26 +356,28 @@ public class GymManagerController implements Initializable {
         }
         Date DOB = new Date(classMemberDOBPicker.getValue().toString());
         if(DOB.compareTo(new Date()) >=0){
-            output.appendText("DOB cannot be today or future day.\n");
+            output.appendText("DOB " + DOB + ": cannot be today or a " +
+                    "future date.\n");
             clearAllFieldsFitness();
             return false;
         }
         if(!DOB.aboveEighteen()){
-            output.appendText("Member must be older than 18.\n");
+            output.appendText("DOB " + DOB + ": must be 18 or older to " +
+                    "join!\n");
             clearAllFieldsFitness();
             return false;
         }
-        if(classLocationChoiceBar.getValue() == null || classLocationChoiceBar.getValue().equals("")){
+        if(classLocationChoiceBar.getValue() == null){
             output.appendText("Select a location.\n");
             clearAllFieldsFitness();
             return false;
         }
-        if(fitnessChoiceBar.getValue() == null || fitnessChoiceBar.getValue().equals("")){
+        if(fitnessChoiceBar.getValue() == null){
             output.appendText("Select a fitness class.\n");
             clearAllFieldsFitness();
             return false;
         }
-        if(instructorChoiceBar.getValue() == null || instructorChoiceBar.getValue().equals("")){
+        if(instructorChoiceBar.getValue() == null){
             output.appendText("Select an instructor.\n");
             clearAllFieldsFitness();
             return false;
@@ -391,7 +385,6 @@ public class GymManagerController implements Initializable {
         return true;
     }
 
-    //c;ears all fields in membership tab besides text area ofc.
     private void clearAllFields() {
         enterFirstName.setText("");
         enterLastName.setText("");
@@ -411,24 +404,22 @@ public class GymManagerController implements Initializable {
         isGuestNo.setSelected(true);
     }
 
-
     private boolean isAlpha(String name) {
         char[] chars = name.toCharArray();
-
         for (char c : chars) {
-            if(!Character.isLetter(c)) {
+            if(!Character.isLetter(c))
                 return false;
-            }
         }
         return true;
     }
 
-    private boolean isClassValid(String className, String instructor, String location){
-        FitnessClass fitnessClass = new FitnessClass(instructor, className, location);
-
+    private boolean isClassValid(String className, String instructor,
+                                 String location){
+        FitnessClass fitnessClass = new FitnessClass(instructor, className,
+                location);
         if(schedule.findFitnessClass(fitnessClass) == null){
-            output.appendText(className + " by " + instructor + " does not " +
-                    "exist at " + location);
+            output.appendText(className + " by " + instructor + " does not"
+                    + " exist at " + location);
             clearAllFieldsFitness();
             return false;
         }
@@ -497,13 +488,12 @@ public class GymManagerController implements Initializable {
         } else {
             output.appendText(schedule.toString());
         }
-
     }
 
     @FXML
     public void onLoadClassScheduleClicked(){
         String file = "./javafx/src/main/java/com/example/gymmembershipgui/classSchedule.txt";
-        try{
+        try {
             schedule.loadClassSchedule(file);
             output.appendText(schedule.toString());
         } catch (FileNotFoundException e) {
